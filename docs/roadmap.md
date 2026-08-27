@@ -34,5 +34,10 @@
 
 - Welche UEFA-Regelmenge soll exakt simuliert werden?
 - Welche Teile duerfen vereinfacht werden?
+
+## Geklaerte Fragen
+
 - Soll die App nur iPhone oder auch iPad unterstuetzen?
+  Geklaert: iPhone zuerst, iPad-tauglich ueber adaptive Grids, keine eigenen
+  Split-View-Layouts. Details in `ui-architecture.md`.
 
