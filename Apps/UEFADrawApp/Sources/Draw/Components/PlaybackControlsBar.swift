@@ -1,4 +1,8 @@
 // PlaybackControlsBar.swift
+//
+// Kompakt gehalten: ein segmentiertes Tempo-Picker sprengt auf dem iPhone die
+// Breite und schiebt ueber den safeAreaInset den ganzen Inhalt aus dem Bild.
+// Deshalb liegt das Tempo in einem Menue.
 
 import SwiftUI
 
@@ -14,46 +18,94 @@ struct PlaybackControlsBar: View {
     let onReplay: () -> Void
     let onSkip: () -> Void
 
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     var body: some View {
-        VStack(spacing: Tokens.Spacing.small) {
-            ProgressView(value: progress)
-                .progressViewStyle(.linear)
+        VStack(spacing: Tokens.Spacing.medium) {
+            progressTrack
 
-            HStack(spacing: Tokens.Spacing.medium) {
-                Button(action: onTogglePause) {
-                    Image(systemName: isPaused ? "play.fill" : "pause.fill")
-                        .frame(width: 28)
-                }
-                .accessibilityLabel(isPaused ? "Fortsetzen" : "Pausieren")
+            HStack(spacing: Tokens.Spacing.small) {
+                primaryButton
 
-                Button(action: onStepForward) {
-                    Image(systemName: "forward.frame.fill")
-                }
-                .disabled(!canStepForward)
-                .accessibilityLabel("Einen Schritt weiter")
+                iconButton("forward.frame.fill", label: "Einen Schritt weiter", action: onStepForward)
+                    .disabled(!canStepForward)
 
-                Picker("Tempo", selection: Binding(get: { speed }, set: onSpeedChange)) {
-                    ForEach(PlaybackController.Speed.allCases) { option in
-                        Text(option.label).tag(option)
-                    }
-                }
-                .pickerStyle(.segmented)
-                .labelsHidden()
+                speedMenu
 
-                Button(action: onReplay) {
-                    Image(systemName: "arrow.counterclockwise")
-                }
-                .accessibilityLabel("Auslosung wiederholen")
+                Spacer(minLength: 0)
 
-                Button(action: onSkip) {
-                    Image(systemName: "forward.end.fill")
-                }
-                .accessibilityLabel("Zum Ergebnis springen")
+                iconButton("arrow.counterclockwise", label: "Wiederholen", action: onReplay)
+                iconButton("forward.end.fill", label: "Zum Ergebnis springen", action: onSkip)
             }
-            .buttonStyle(.bordered)
-            .font(.body)
         }
-        .padding(Tokens.Spacing.medium)
+        .padding(.horizontal, Tokens.Spacing.medium)
+        .padding(.vertical, Tokens.Spacing.medium)
         .background(.bar)
+    }
+
+    private var progressTrack: some View {
+        GeometryReader { proxy in
+            ZStack(alignment: .leading) {
+                Capsule().fill(.quaternary)
+                Capsule()
+                    .fill(.tint)
+                    .frame(width: max(0, proxy.size.width * progress))
+            }
+        }
+        .frame(height: 4)
+        .animation(Tokens.Motion.respecting(reduceMotion, Tokens.Motion.state), value: progress)
+        .accessibilityElement()
+        .accessibilityLabel("Fortschritt")
+        .accessibilityValue("\(Int(progress * 100)) Prozent")
+    }
+
+    /// Wiedergabe ist die Hauptaktion und deshalb hervorgehoben.
+    private var primaryButton: some View {
+        Button(action: onTogglePause) {
+            Image(systemName: isPaused ? "play.fill" : "pause.fill")
+                .font(.body.weight(.semibold))
+                .frame(width: 46, height: 34)
+                .contentTransition(.symbolEffect(.replace))
+        }
+        .buttonStyle(.borderedProminent)
+        .buttonBorderShape(.roundedRectangle(radius: Tokens.Radius.chip))
+        .accessibilityLabel(isPaused ? "Fortsetzen" : "Pausieren")
+    }
+
+    private var speedMenu: some View {
+        Menu {
+            Picker("Tempo", selection: Binding(get: { speed }, set: onSpeedChange)) {
+                ForEach(PlaybackController.Speed.allCases) { option in
+                    Text(option.menuLabel).tag(option)
+                }
+            }
+            .pickerStyle(.inline)
+        } label: {
+            HStack(spacing: 3) {
+                Image(systemName: "gauge.with.needle")
+                    .font(.caption2)
+                Text(speed.label)
+                    .font(.footnote.weight(.medium))
+                    .monospacedDigit()
+            }
+            .frame(minWidth: 52, minHeight: 34)
+        }
+        .buttonStyle(.bordered)
+        .buttonBorderShape(.roundedRectangle(radius: Tokens.Radius.chip))
+        .accessibilityLabel("Tempo, aktuell \(speed.menuLabel)")
+    }
+
+    private func iconButton(
+        _ systemName: String,
+        label: String,
+        action: @escaping () -> Void
+    ) -> some View {
+        Button(action: action) {
+            Image(systemName: systemName)
+                .frame(width: 34, height: 34)
+        }
+        .buttonStyle(.bordered)
+        .buttonBorderShape(.roundedRectangle(radius: Tokens.Radius.chip))
+        .accessibilityLabel(label)
     }
 }

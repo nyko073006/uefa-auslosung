@@ -1,0 +1,689 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		02D15D7B9D05986FE28AF382 /* ConstraintToggleRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8BB23F80F0F3A217E1B5FB6 /* ConstraintToggleRow.swift */; };
+		0F243F49D3292A1D2E18E996 /* RevealState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE68AE384B199E73DFFA4C6 /* RevealState.swift */; };
+		12DBF70DF45B4DF7788C267A /* ResultsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF734ABA1A0E77E8740A5A82 /* ResultsViewModel.swift */; };
+		1577A472702205DCEE489FAE /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF20AA29834940A40080DEE5 /* AppRouter.swift */; };
+		1A409EABA05A329DF2D86C1A /* DrawFixtures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEC32E792B5D50E50AFFB07 /* DrawFixtures.swift */; };
+		1C4B8B3B71B05BAFBFC3586D /* AssociationTallyBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2EB09B81A067D1E8426C1A1 /* AssociationTallyBar.swift */; };
+		267B77739D191702440DA35B /* DesignTokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D3E0698070F43A588001A5 /* DesignTokens.swift */; };
+		2817E22893AFA0F558D6C691 /* DrawResultExport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A79C49C0F5E76B3C9268D41 /* DrawResultExport.swift */; };
+		28C8F9B848D3DB354679A87D /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D00F990BC02AA0FCDB0461 /* RootView.swift */; };
+		375B95D86AFCE617F8B508FC /* PlaybackControlsBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6FDD7CF77B72C8D0C070F90 /* PlaybackControlsBar.swift */; };
+		42BB7595DF6C1377A19BECAB /* SetupScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AF0BCA83B9DB922B151FC8 /* SetupScreen.swift */; };
+		4C259ED9AEA1A78030B52FD3 /* LiveDrawViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A8C38160B630911850AA055 /* LiveDrawViewModel.swift */; };
+		54F5CA6FDE99601569AC7767 /* PlaybackControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA91FF3F584EF683E19D960 /* PlaybackControllerTests.swift */; };
+		5B4EB3D60FD2FC20183CDC22 /* SampleTeams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FB6C98537BAD94517C7267 /* SampleTeams.swift */; };
+		5BFBF4400ED85A74FE64D447 /* TeamScheduleCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68572F723199B4EC3C52C069 /* TeamScheduleCard.swift */; };
+		69A10495D9DEECA3C7E8ADC7 /* PotSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA83F3F2D77344CC364D9C9 /* PotSectionView.swift */; };
+		6EB86F20F546E5FBF46047FB /* ResultsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820276F5B7198A0B3C39780C /* ResultsScreen.swift */; };
+		753C014C64B211F3BDA41C84 /* SeedFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B2816984D2019ED94CB8C6 /* SeedFieldView.swift */; };
+		7B33FFC2FF1F6D307D655457 /* MockDrawEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC0310953C7814E1A25BE41 /* MockDrawEngine.swift */; };
+		821034551C1C1487A13A3B8F /* DrawnTeamCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51DFDF54697D086060830425 /* DrawnTeamCard.swift */; };
+		87F148D0F37D9F9A9113DDAA /* RevealSequencer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5110DC0A13B156132F619FB /* RevealSequencer.swift */; };
+		8DF8F075E606FCE7503ABF89 /* RevealStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 852E00D6B768A5228AEA54B3 /* RevealStateTests.swift */; };
+		A7B116B1A0B75751F4107C93 /* AppDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B84F220F511243937D28758 /* AppDependencies.swift */; };
+		AF3B5EC94788FE3FB64B5576 /* DrawEnginePort.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A23EE467B233C66F979620 /* DrawEnginePort.swift */; };
+		B17C5E40F681A66E3F4F72D0 /* TeamSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DECAA7AD64D5B1556FA4C36 /* TeamSchedule.swift */; };
+		D0DC77383638E2DA706EFD02 /* TeamRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 305A224D23FF0D67937222E5 /* TeamRowView.swift */; };
+		D23854B134A20C172C9AE433 /* UEFADrawApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA6A6F5C9041869E706E183 /* UEFADrawApp.swift */; };
+		D4E08742ECA59C259E80CC49 /* SetupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D69D8303A0B19BA3813A92 /* SetupViewModel.swift */; };
+		D6995FEBF32F8EF1A4ACF69D /* ExportPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462D9F87F526C6164DD44E0A /* ExportPreviewView.swift */; };
+		D94F4C409904BAD3AFFE2E31 /* DomainStubs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4120C0BCD6133C531BBD6E5D /* DomainStubs.swift */; };
+		DEC8AC66BD7EC2E41CEC46AD /* RevealSequencerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A218EDE80D6387A8ED8AC68 /* RevealSequencerTests.swift */; };
+		DFFAFC29B228E42D916E2C4D /* RejectionBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067156EE3EB94767E9201748 /* RejectionBanner.swift */; };
+		E2631F00F59E162B881ABF4B /* OpponentRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E7111FDEF2D2CE6255E6D9 /* OpponentRow.swift */; };
+		E40732312ADF489C5256505D /* PotStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05C9E7642E967CF1CBE1CF4A /* PotStackView.swift */; };
+		E5C571A234AA94B4EBF525E1 /* DrawEngine in Frameworks */ = {isa = PBXBuildFile; productRef = 9F41BFD8DDA6FB57652F7A36 /* DrawEngine */; };
+		F552FD635F313AD6E56FA6F9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB5513677E5F00E2B6333D2D /* Assets.xcassets */; };
+		FA3E0C1F9C95CCFE1E5CF753 /* OpponentSlotGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E2171E9EFFC1F56ABB92E83 /* OpponentSlotGrid.swift */; };
+		FB2396FC1675A335BD6904EF /* PlaybackController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91430726DA0C6F9C1E12C608 /* PlaybackController.swift */; };
+		FDEF2631293215471EB3A586 /* LiveDrawScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15897BAD3A84E087E90C0BCA /* LiveDrawScreen.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		9CEF5899FDCCD1DE74DC7982 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6A380A21B3267931BF83ACDF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4D444DA2AB63AA3ACE6F4673;
+			remoteInfo = UEFADrawApp;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		05C9E7642E967CF1CBE1CF4A /* PotStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PotStackView.swift; sourceTree = "<group>"; };
+		067156EE3EB94767E9201748 /* RejectionBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RejectionBanner.swift; sourceTree = "<group>"; };
+		15897BAD3A84E087E90C0BCA /* LiveDrawScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveDrawScreen.swift; sourceTree = "<group>"; };
+		1CA91FF3F584EF683E19D960 /* PlaybackControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackControllerTests.swift; sourceTree = "<group>"; };
+		1DEC32E792B5D50E50AFFB07 /* DrawFixtures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawFixtures.swift; sourceTree = "<group>"; };
+		1DECAA7AD64D5B1556FA4C36 /* TeamSchedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamSchedule.swift; sourceTree = "<group>"; };
+		305A224D23FF0D67937222E5 /* TeamRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamRowView.swift; sourceTree = "<group>"; };
+		30D3E0698070F43A588001A5 /* DesignTokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignTokens.swift; sourceTree = "<group>"; };
+		37C93250AD964FA6DC40622C /* UEFA-Auslosung */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "UEFA-Auslosung"; path = ../..; sourceTree = SOURCE_ROOT; };
+		38AF0BCA83B9DB922B151FC8 /* SetupScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupScreen.swift; sourceTree = "<group>"; };
+		3CE68AE384B199E73DFFA4C6 /* RevealState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevealState.swift; sourceTree = "<group>"; };
+		4120C0BCD6133C531BBD6E5D /* DomainStubs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainStubs.swift; sourceTree = "<group>"; };
+		462D9F87F526C6164DD44E0A /* ExportPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportPreviewView.swift; sourceTree = "<group>"; };
+		4E2171E9EFFC1F56ABB92E83 /* OpponentSlotGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpponentSlotGrid.swift; sourceTree = "<group>"; };
+		51DFDF54697D086060830425 /* DrawnTeamCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawnTeamCard.swift; sourceTree = "<group>"; };
+		52B2816984D2019ED94CB8C6 /* SeedFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeedFieldView.swift; sourceTree = "<group>"; };
+		5A218EDE80D6387A8ED8AC68 /* RevealSequencerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevealSequencerTests.swift; sourceTree = "<group>"; };
+		5A79C49C0F5E76B3C9268D41 /* DrawResultExport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawResultExport.swift; sourceTree = "<group>"; };
+		68572F723199B4EC3C52C069 /* TeamScheduleCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamScheduleCard.swift; sourceTree = "<group>"; };
+		6A8C38160B630911850AA055 /* LiveDrawViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveDrawViewModel.swift; sourceTree = "<group>"; };
+		6F1DEF569FCAD140252BFDF0 /* UEFADrawAppTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = UEFADrawAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		76D69D8303A0B19BA3813A92 /* SetupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupViewModel.swift; sourceTree = "<group>"; };
+		76FB6C98537BAD94517C7267 /* SampleTeams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleTeams.swift; sourceTree = "<group>"; };
+		7CC0310953C7814E1A25BE41 /* MockDrawEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDrawEngine.swift; sourceTree = "<group>"; };
+		820276F5B7198A0B3C39780C /* ResultsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsScreen.swift; sourceTree = "<group>"; };
+		852E00D6B768A5228AEA54B3 /* RevealStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevealStateTests.swift; sourceTree = "<group>"; };
+		91430726DA0C6F9C1E12C608 /* PlaybackController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackController.swift; sourceTree = "<group>"; };
+		9B84F220F511243937D28758 /* AppDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDependencies.swift; sourceTree = "<group>"; };
+		9DA83F3F2D77344CC364D9C9 /* PotSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PotSectionView.swift; sourceTree = "<group>"; };
+		A6FDD7CF77B72C8D0C070F90 /* PlaybackControlsBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackControlsBar.swift; sourceTree = "<group>"; };
+		A71AC3FC6C7D51F7BB2FF741 /* UEFADrawApp.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = UEFADrawApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A7A23EE467B233C66F979620 /* DrawEnginePort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawEnginePort.swift; sourceTree = "<group>"; };
+		A8BB23F80F0F3A217E1B5FB6 /* ConstraintToggleRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstraintToggleRow.swift; sourceTree = "<group>"; };
+		AF734ABA1A0E77E8740A5A82 /* ResultsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsViewModel.swift; sourceTree = "<group>"; };
+		B2EB09B81A067D1E8426C1A1 /* AssociationTallyBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssociationTallyBar.swift; sourceTree = "<group>"; };
+		B5110DC0A13B156132F619FB /* RevealSequencer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevealSequencer.swift; sourceTree = "<group>"; };
+		B8E7111FDEF2D2CE6255E6D9 /* OpponentRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpponentRow.swift; sourceTree = "<group>"; };
+		BF20AA29834940A40080DEE5 /* AppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
+		CB5513677E5F00E2B6333D2D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		EEA6A6F5C9041869E706E183 /* UEFADrawApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UEFADrawApp.swift; sourceTree = "<group>"; };
+		F6D00F990BC02AA0FCDB0461 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		60F56D22946EFF11044849F0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E5C571A234AA94B4EBF525E1 /* DrawEngine in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		06E31D46B48446533233353F /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				462D9F87F526C6164DD44E0A /* ExportPreviewView.swift */,
+				B8E7111FDEF2D2CE6255E6D9 /* OpponentRow.swift */,
+				68572F723199B4EC3C52C069 /* TeamScheduleCard.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		0CF19E1D5102F007AF69DE54 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				CB5513677E5F00E2B6333D2D /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		0F4DD6010B1EEE385CC4CE2C /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				E609C804A8582336BA8A1CE7 /* Draw */,
+				F83479A6AE1EAB49422711BD /* Results */,
+				1BAFD3BABBFE465FE8570238 /* Setup */,
+				71F1B4D2EBBCED98F6863FCB /* Shell */,
+				7CE23CBD516BC4182A2C77E7 /* Support */,
+				A16440CB967411E9EC7321AD /* Tests */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		1BAFD3BABBFE465FE8570238 /* Setup */ = {
+			isa = PBXGroup;
+			children = (
+				D52345491347302288B37828 /* Components */,
+				38AF0BCA83B9DB922B151FC8 /* SetupScreen.swift */,
+				76D69D8303A0B19BA3813A92 /* SetupViewModel.swift */,
+			);
+			path = Setup;
+			sourceTree = "<group>";
+		};
+		5842C76F34A16ABECC06F4A8 = {
+			isa = PBXGroup;
+			children = (
+				6857DD846CE736F5E6190A37 /* Packages */,
+				0CF19E1D5102F007AF69DE54 /* Resources */,
+				0F4DD6010B1EEE385CC4CE2C /* Sources */,
+				748BF568998F5C867DD94672 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		6857DD846CE736F5E6190A37 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				37C93250AD964FA6DC40622C /* UEFA-Auslosung */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
+		71F1B4D2EBBCED98F6863FCB /* Shell */ = {
+			isa = PBXGroup;
+			children = (
+				9B84F220F511243937D28758 /* AppDependencies.swift */,
+				BF20AA29834940A40080DEE5 /* AppRouter.swift */,
+				30D3E0698070F43A588001A5 /* DesignTokens.swift */,
+				F6D00F990BC02AA0FCDB0461 /* RootView.swift */,
+				EEA6A6F5C9041869E706E183 /* UEFADrawApp.swift */,
+			);
+			path = Shell;
+			sourceTree = "<group>";
+		};
+		748BF568998F5C867DD94672 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A71AC3FC6C7D51F7BB2FF741 /* UEFADrawApp.app */,
+				6F1DEF569FCAD140252BFDF0 /* UEFADrawAppTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7CE23CBD516BC4182A2C77E7 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				4120C0BCD6133C531BBD6E5D /* DomainStubs.swift */,
+				A7A23EE467B233C66F979620 /* DrawEnginePort.swift */,
+				7CC0310953C7814E1A25BE41 /* MockDrawEngine.swift */,
+				76FB6C98537BAD94517C7267 /* SampleTeams.swift */,
+				1DECAA7AD64D5B1556FA4C36 /* TeamSchedule.swift */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
+		A16440CB967411E9EC7321AD /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				1DEC32E792B5D50E50AFFB07 /* DrawFixtures.swift */,
+				1CA91FF3F584EF683E19D960 /* PlaybackControllerTests.swift */,
+				5A218EDE80D6387A8ED8AC68 /* RevealSequencerTests.swift */,
+				852E00D6B768A5228AEA54B3 /* RevealStateTests.swift */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		C0D4B8D51EA3800919404923 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				B2EB09B81A067D1E8426C1A1 /* AssociationTallyBar.swift */,
+				51DFDF54697D086060830425 /* DrawnTeamCard.swift */,
+				4E2171E9EFFC1F56ABB92E83 /* OpponentSlotGrid.swift */,
+				A6FDD7CF77B72C8D0C070F90 /* PlaybackControlsBar.swift */,
+				05C9E7642E967CF1CBE1CF4A /* PotStackView.swift */,
+				067156EE3EB94767E9201748 /* RejectionBanner.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		D52345491347302288B37828 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				A8BB23F80F0F3A217E1B5FB6 /* ConstraintToggleRow.swift */,
+				9DA83F3F2D77344CC364D9C9 /* PotSectionView.swift */,
+				52B2816984D2019ED94CB8C6 /* SeedFieldView.swift */,
+				305A224D23FF0D67937222E5 /* TeamRowView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		E609C804A8582336BA8A1CE7 /* Draw */ = {
+			isa = PBXGroup;
+			children = (
+				C0D4B8D51EA3800919404923 /* Components */,
+				15897BAD3A84E087E90C0BCA /* LiveDrawScreen.swift */,
+				6A8C38160B630911850AA055 /* LiveDrawViewModel.swift */,
+				91430726DA0C6F9C1E12C608 /* PlaybackController.swift */,
+				B5110DC0A13B156132F619FB /* RevealSequencer.swift */,
+				3CE68AE384B199E73DFFA4C6 /* RevealState.swift */,
+			);
+			path = Draw;
+			sourceTree = "<group>";
+		};
+		F83479A6AE1EAB49422711BD /* Results */ = {
+			isa = PBXGroup;
+			children = (
+				06E31D46B48446533233353F /* Components */,
+				5A79C49C0F5E76B3C9268D41 /* DrawResultExport.swift */,
+				820276F5B7198A0B3C39780C /* ResultsScreen.swift */,
+				AF734ABA1A0E77E8740A5A82 /* ResultsViewModel.swift */,
+			);
+			path = Results;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4D444DA2AB63AA3ACE6F4673 /* UEFADrawApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 08266056DC85D58AD094E10E /* Build configuration list for PBXNativeTarget "UEFADrawApp" */;
+			buildPhases = (
+				1416529756837F59D382F366 /* Sources */,
+				82753E6DD846C368BA4E163E /* Resources */,
+				60F56D22946EFF11044849F0 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = UEFADrawApp;
+			packageProductDependencies = (
+				9F41BFD8DDA6FB57652F7A36 /* DrawEngine */,
+			);
+			productName = UEFADrawApp;
+			productReference = A71AC3FC6C7D51F7BB2FF741 /* UEFADrawApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+		5C799053C5A67B41D76CBAE5 /* UEFADrawAppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8F95FF441A87DE935FCE45CF /* Build configuration list for PBXNativeTarget "UEFADrawAppTests" */;
+			buildPhases = (
+				7E2D2D021A8237F6249E4F7B /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2A404E6A58A29D371383E53D /* PBXTargetDependency */,
+			);
+			name = UEFADrawAppTests;
+			packageProductDependencies = (
+			);
+			productName = UEFADrawAppTests;
+			productReference = 6F1DEF569FCAD140252BFDF0 /* UEFADrawAppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6A380A21B3267931BF83ACDF /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					4D444DA2AB63AA3ACE6F4673 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
+					5C799053C5A67B41D76CBAE5 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 61627F0292DCA6AFABF42DEA /* Build configuration list for PBXProject "UEFADrawApp" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 5842C76F34A16ABECC06F4A8;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				F65DDB9FDE5FA9FCC959C6F0 /* XCLocalSwiftPackageReference "../.." */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 748BF568998F5C867DD94672 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4D444DA2AB63AA3ACE6F4673 /* UEFADrawApp */,
+				5C799053C5A67B41D76CBAE5 /* UEFADrawAppTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		82753E6DD846C368BA4E163E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F552FD635F313AD6E56FA6F9 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1416529756837F59D382F366 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A7B116B1A0B75751F4107C93 /* AppDependencies.swift in Sources */,
+				1577A472702205DCEE489FAE /* AppRouter.swift in Sources */,
+				1C4B8B3B71B05BAFBFC3586D /* AssociationTallyBar.swift in Sources */,
+				02D15D7B9D05986FE28AF382 /* ConstraintToggleRow.swift in Sources */,
+				267B77739D191702440DA35B /* DesignTokens.swift in Sources */,
+				D94F4C409904BAD3AFFE2E31 /* DomainStubs.swift in Sources */,
+				AF3B5EC94788FE3FB64B5576 /* DrawEnginePort.swift in Sources */,
+				2817E22893AFA0F558D6C691 /* DrawResultExport.swift in Sources */,
+				821034551C1C1487A13A3B8F /* DrawnTeamCard.swift in Sources */,
+				D6995FEBF32F8EF1A4ACF69D /* ExportPreviewView.swift in Sources */,
+				FDEF2631293215471EB3A586 /* LiveDrawScreen.swift in Sources */,
+				4C259ED9AEA1A78030B52FD3 /* LiveDrawViewModel.swift in Sources */,
+				7B33FFC2FF1F6D307D655457 /* MockDrawEngine.swift in Sources */,
+				E2631F00F59E162B881ABF4B /* OpponentRow.swift in Sources */,
+				FA3E0C1F9C95CCFE1E5CF753 /* OpponentSlotGrid.swift in Sources */,
+				FB2396FC1675A335BD6904EF /* PlaybackController.swift in Sources */,
+				375B95D86AFCE617F8B508FC /* PlaybackControlsBar.swift in Sources */,
+				69A10495D9DEECA3C7E8ADC7 /* PotSectionView.swift in Sources */,
+				E40732312ADF489C5256505D /* PotStackView.swift in Sources */,
+				DFFAFC29B228E42D916E2C4D /* RejectionBanner.swift in Sources */,
+				6EB86F20F546E5FBF46047FB /* ResultsScreen.swift in Sources */,
+				12DBF70DF45B4DF7788C267A /* ResultsViewModel.swift in Sources */,
+				87F148D0F37D9F9A9113DDAA /* RevealSequencer.swift in Sources */,
+				0F243F49D3292A1D2E18E996 /* RevealState.swift in Sources */,
+				28C8F9B848D3DB354679A87D /* RootView.swift in Sources */,
+				5B4EB3D60FD2FC20183CDC22 /* SampleTeams.swift in Sources */,
+				753C014C64B211F3BDA41C84 /* SeedFieldView.swift in Sources */,
+				42BB7595DF6C1377A19BECAB /* SetupScreen.swift in Sources */,
+				D4E08742ECA59C259E80CC49 /* SetupViewModel.swift in Sources */,
+				D0DC77383638E2DA706EFD02 /* TeamRowView.swift in Sources */,
+				B17C5E40F681A66E3F4F72D0 /* TeamSchedule.swift in Sources */,
+				5BFBF4400ED85A74FE64D447 /* TeamScheduleCard.swift in Sources */,
+				D23854B134A20C172C9AE433 /* UEFADrawApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7E2D2D021A8237F6249E4F7B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1A409EABA05A329DF2D86C1A /* DrawFixtures.swift in Sources */,
+				54F5CA6FDE99601569AC7767 /* PlaybackControllerTests.swift in Sources */,
+				DEC8AC66BD7EC2E41CEC46AD /* RevealSequencerTests.swift in Sources */,
+				8DF8F075E606FCE7503ABF89 /* RevealStateTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2A404E6A58A29D371383E53D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4D444DA2AB63AA3ACE6F4673 /* UEFADrawApp */;
+			targetProxy = 9CEF5899FDCCD1DE74DC7982 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		3ACDD1E20DB330438B3AF932 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.uefaauslosung.drawapp.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/UEFADrawApp.app/UEFADrawApp";
+			};
+			name = Debug;
+		};
+		5CD59EFAE10D01224A96614F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.uefaauslosung.drawapp.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/UEFADrawApp.app/UEFADrawApp";
+			};
+			name = Release;
+		};
+		BB3771A89DA000F6060FDF76 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Auslosung;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.uefaauslosung.drawapp;
+				PRODUCT_NAME = UEFADrawApp;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D44621F1BD1382323AE3BD18 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_TREAT_WARNINGS_AS_ERRORS = NO;
+				SWIFT_VERSION = 5.10;
+			};
+			name = Debug;
+		};
+		F024DD4E2F1EFD0889179752 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Auslosung;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.uefaauslosung.drawapp;
+				PRODUCT_NAME = UEFADrawApp;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		FCE256CCCCDA30A1E2C74BAE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_TREAT_WARNINGS_AS_ERRORS = NO;
+				SWIFT_VERSION = 5.10;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		08266056DC85D58AD094E10E /* Build configuration list for PBXNativeTarget "UEFADrawApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BB3771A89DA000F6060FDF76 /* Debug */,
+				F024DD4E2F1EFD0889179752 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		61627F0292DCA6AFABF42DEA /* Build configuration list for PBXProject "UEFADrawApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D44621F1BD1382323AE3BD18 /* Debug */,
+				FCE256CCCCDA30A1E2C74BAE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		8F95FF441A87DE935FCE45CF /* Build configuration list for PBXNativeTarget "UEFADrawAppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3ACDD1E20DB330438B3AF932 /* Debug */,
+				5CD59EFAE10D01224A96614F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		F65DDB9FDE5FA9FCC959C6F0 /* XCLocalSwiftPackageReference "../.." */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../..;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		9F41BFD8DDA6FB57652F7A36 /* DrawEngine */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DrawEngine;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 6A380A21B3267931BF83ACDF /* Project object */;
+}

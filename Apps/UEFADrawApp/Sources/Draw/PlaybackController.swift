@@ -22,12 +22,23 @@ final class PlaybackController {
 
         var id: String { rawValue }
 
+        /// Kurzform fuer die Leiste.
         var label: String {
             switch self {
-            case .slow: "0,5x"
-            case .normal: "1x"
-            case .fast: "2x"
+            case .slow: "0,5×"
+            case .normal: "1×"
+            case .fast: "2×"
             case .manual: "Schritt"
+            }
+        }
+
+        /// Ausgeschrieben fuer das Menue und die Sprachausgabe.
+        var menuLabel: String {
+            switch self {
+            case .slow: "Langsam (0,5×)"
+            case .normal: "Normal (1×)"
+            case .fast: "Schnell (2×)"
+            case .manual: "Schritt für Schritt"
             }
         }
 

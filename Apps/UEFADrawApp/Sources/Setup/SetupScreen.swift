@@ -15,12 +15,16 @@ struct SetupScreen: View {
 
     var body: some View {
         Form {
-            Section("Zufall") {
+            Section {
                 SeedFieldView(
                     seedText: $viewModel.seedText,
                     isValid: viewModel.isSeedValid,
                     onRandomize: viewModel.randomizeSeed
                 )
+            } header: {
+                Text("Zufall")
+            } footer: {
+                Text("Derselbe Seed erzeugt dieselbe Auslosung – teilbar und wiederholbar.")
             }
 
             if !viewModel.constraints.isEmpty {
@@ -44,11 +48,11 @@ struct SetupScreen: View {
                 PotSectionView(viewModel: viewModel, potArrayIndex: index)
             }
 
-            if !viewModel.blockingIssues.isEmpty || !viewModel.warningIssues.isEmpty {
+            let globalIssues = viewModel.issues.filter { $0.potIndex == nil }
+            if !globalIssues.isEmpty {
                 Section("Hinweise") {
-                    ForEach(viewModel.issues.filter { $0.potIndex == nil }) { issue in
-                        Label(issue.message, systemImage: "exclamationmark.triangle.fill")
-                            .foregroundStyle(issue.severity == .blocking ? .red : .orange)
+                    ForEach(globalIssues) { issue in
+                        IssueRow(issue: issue)
                     }
                 }
             }
@@ -60,7 +64,7 @@ struct SetupScreen: View {
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 Menu {
-                    Button("Auf Standard zuruecksetzen", systemImage: "arrow.counterclockwise") {
+                    Button("Auf Standard zurücksetzen", systemImage: "arrow.counterclockwise") {
                         viewModel.resetToDefaults()
                     }
                 } label: {
@@ -68,9 +72,7 @@ struct SetupScreen: View {
                 }
             }
         }
-        .safeAreaInset(edge: .bottom) {
-            startBar
-        }
+        .safeAreaInset(edge: .bottom) { startBar }
         .onAppear { viewModel.validate() }
         .onChange(of: viewModel.pots) { _, _ in viewModel.validate() }
         .onChange(of: viewModel.seedText) { _, _ in viewModel.validate() }
@@ -78,13 +80,20 @@ struct SetupScreen: View {
 
     private var startBar: some View {
         VStack(spacing: Tokens.Spacing.small) {
-            HStack {
+            HStack(spacing: Tokens.Spacing.small) {
                 Label("\(viewModel.totalTeamCount) Teams", systemImage: "person.3.fill")
+                    .contentTransition(.numericText())
+
                 Spacer()
+
                 if let first = viewModel.blockingIssues.first {
-                    Text(first.message)
+                    Label(first.message, systemImage: "exclamationmark.circle.fill")
                         .lineLimit(1)
+                        .truncationMode(.tail)
                         .foregroundStyle(.red)
+                } else {
+                    Label("Bereit", systemImage: "checkmark.circle.fill")
+                        .foregroundStyle(.green)
                 }
             }
             .font(.footnote)
@@ -94,14 +103,35 @@ struct SetupScreen: View {
                 viewModel.start()
             } label: {
                 Label("Auslosung starten", systemImage: "play.fill")
+                    .font(.body.weight(.semibold))
                     .frame(maxWidth: .infinity)
+                    .padding(.vertical, 6)
             }
             .buttonStyle(.borderedProminent)
+            .buttonBorderShape(.roundedRectangle(radius: Tokens.Radius.chip))
             .controlSize(.large)
             .disabled(!viewModel.isStartable)
         }
         .padding(Tokens.Spacing.medium)
         .background(.bar)
+        .animation(Tokens.Motion.state, value: viewModel.isStartable)
+    }
+}
+
+/// Einheitliche Darstellung eines Befunds aus der Engine-Validierung.
+struct IssueRow: View {
+
+    let issue: SetupIssue
+
+    var body: some View {
+        Label {
+            Text(issue.message)
+        } icon: {
+            Image(systemName: issue.severity == .blocking
+                  ? "exclamationmark.octagon.fill"
+                  : "exclamationmark.triangle.fill")
+        }
+        .foregroundStyle(issue.severity == .blocking ? .red : .orange)
     }
 }
 

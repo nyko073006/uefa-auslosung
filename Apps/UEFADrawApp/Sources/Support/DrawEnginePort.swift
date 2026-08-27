@@ -148,9 +148,9 @@ enum DrawEngineError: LocalizedError, Sendable {
         switch self {
         case .invalidSetup(let issues):
             let list = issues.map(\.message).joined(separator: ", ")
-            return "Die Konfiguration ist nicht gueltig: \(list)"
+            return "Die Konfiguration ist nicht gültig: \(list)"
         case .noValidDraw(let seed):
-            return "Mit dem Seed \(seed) liess sich keine gueltige Auslosung finden."
+            return "Mit dem Seed \(seed) ließ sich keine gültige Auslosung finden."
         }
     }
 }

@@ -33,16 +33,22 @@ struct PotSectionView: View {
             Button {
                 viewModel.addTeam(toPot: pot.id)
             } label: {
-                Label("Team hinzufuegen", systemImage: "plus.circle")
+                Label("Team hinzufügen", systemImage: "plus.circle.fill")
+                    .foregroundStyle(Tokens.potColor(pot.id))
             }
         } header: {
-            HStack {
-                Circle()
-                    .fill(Tokens.potColor(pot.id))
-                    .frame(width: 10, height: 10)
+            HStack(spacing: Tokens.Spacing.small) {
+                Capsule()
+                    .fill(Tokens.potGradient(pot.id))
+                    .frame(width: 16, height: 5)
+
                 Text("Topf \(pot.id)")
+
                 Spacer()
-                Text("\(pot.teams.count) Teams")
+
+                Text("\(pot.teams.count)")
+                    .monospacedDigit()
+                    .contentTransition(.numericText())
                     .foregroundStyle(.secondary)
             }
         } footer: {
@@ -50,8 +56,7 @@ struct PotSectionView: View {
             if !issues.isEmpty {
                 VStack(alignment: .leading, spacing: Tokens.Spacing.tight) {
                     ForEach(issues) { issue in
-                        Label(issue.message, systemImage: "exclamationmark.triangle.fill")
-                            .foregroundStyle(issue.severity == .blocking ? .red : .orange)
+                        IssueRow(issue: issue)
                     }
                 }
                 .font(.caption)

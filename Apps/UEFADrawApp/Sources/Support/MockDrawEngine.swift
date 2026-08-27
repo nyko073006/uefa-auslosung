@@ -33,7 +33,7 @@ struct MockDrawEngine: DrawEnginePort {
             ),
             ConstraintDescriptor(
                 id: "max-two-per-association",
-                title: "Hoechstens zwei Gegner je Verband",
+                title: "Höchstens zwei Gegner je Verband",
                 explanation: "Kein Team bekommt mehr als zwei Gegner aus demselben Verband."
             )
         ]
@@ -60,7 +60,7 @@ struct MockDrawEngine: DrawEnginePort {
                 SetupIssue(
                     id: "pot-count",
                     severity: .blocking,
-                    message: "Es werden \(potCount) Toepfe erwartet, gefunden: \(setup.pots.count)."
+                    message: "Es werden \(potCount) Töpfe erwartet, gefunden: \(setup.pots.count)."
                 )
             )
         }
@@ -150,9 +150,16 @@ struct MockDrawEngine: DrawEnginePort {
                 .filter { $0.teamID == team.id }
                 .sorted { $0.opponentPot < $1.opponentPot }
 
+            let assignedOpponentIDs = Set(assigned.map(\.opponentID))
+
             for matchup in assigned {
                 if random.next() % 4 == 0,
-                   let rejected = sampleRejection(for: team, among: allTeams, using: &random) {
+                   let rejected = sampleRejection(
+                       for: team,
+                       among: allTeams,
+                       assignedOpponentIDs: assignedOpponentIDs,
+                       using: &random
+                   ) {
                     trace.append(
                         DrawTraceEntry(
                             teamID: team.id,
@@ -178,19 +185,27 @@ struct MockDrawEngine: DrawEnginePort {
         return trace
     }
 
+    /// Waehlt einen Kandidaten, der diesem Team NICHT zugelost wurde, und gibt
+    /// einen bewusst neutralen Begruendungstext zurueck.
+    ///
+    /// Der Text nennt absichtlich keine Regel: der Fake prueft keine, und eine
+    /// erfundene Begruendung wuerde sich mit den erzeugten Paarungen widersprechen
+    /// (er wuerde einen Verband ablehnen, den er an anderer Stelle zulaesst).
+    /// Im Echtbetrieb formuliert die Engine hier den fachlichen Satz.
     private func sampleRejection(
         for team: Team,
         among teams: [Team],
+        assignedOpponentIDs: Set<Team.ID>,
         using random: inout SplitMix64
     ) -> (candidate: Team, reason: String)? {
-        let sameAssociation = teams.filter {
-            $0.association == team.association && $0.id != team.id
+        let candidates = teams.filter {
+            $0.id != team.id && !assignedOpponentIDs.contains($0.id)
         }
-        guard !sameAssociation.isEmpty else { return nil }
+        guard !candidates.isEmpty else { return nil }
 
-        let candidate = sameAssociation[Int(random.next() % UInt64(sameAssociation.count))]
-        // Beispieltext. Im Echtbetrieb formuliert die Engine diesen Satz.
-        let reason = "Gleicher Verband (\(team.association.name)) - Paarung nicht zulaessig."
+        let candidate = candidates[Int(random.next() % UInt64(candidates.count))]
+        let reason = "Beispielhafte Ablehnung des Platzhalters – die echte Engine "
+            + "liefert hier ihre fachliche Begründung."
         return (candidate, reason)
     }
 }

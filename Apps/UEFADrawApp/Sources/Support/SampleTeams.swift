@@ -15,7 +15,7 @@ enum SampleTeams {
         Association(id: "FRA", name: "Frankreich"),
         Association(id: "POR", name: "Portugal"),
         Association(id: "NED", name: "Niederlande"),
-        Association(id: "AUT", name: "Oesterreich"),
+        Association(id: "AUT", name: "Österreich"),
         Association(id: "BEL", name: "Belgien"),
         Association(id: "SCO", name: "Schottland"),
         Association(id: "CRO", name: "Kroatien"),
@@ -35,14 +35,14 @@ enum SampleTeams {
     static func defaultPots() -> [Pot] {
         let layout: [[(String, String)]] = [
             [
-                ("Real Madrid", "ESP"), ("Manchester City", "ENG"), ("Bayern Muenchen", "GER"),
+                ("Real Madrid", "ESP"), ("Manchester City", "ENG"), ("Bayern München", "GER"),
                 ("Paris Saint-Germain", "FRA"), ("Liverpool", "ENG"), ("Inter Mailand", "ITA"),
                 ("Borussia Dortmund", "GER"), ("RB Leipzig", "GER"), ("FC Barcelona", "ESP")
             ],
             [
                 ("Bayer Leverkusen", "GER"), ("Atletico Madrid", "ESP"), ("Atalanta Bergamo", "ITA"),
                 ("Juventus Turin", "ITA"), ("Benfica Lissabon", "POR"), ("Arsenal", "ENG"),
-                ("Club Bruegge", "BEL"), ("Schachtar Donezk", "UKR"), ("AC Mailand", "ITA")
+                ("Club Brügge", "BEL"), ("Schachtar Donezk", "UKR"), ("AC Mailand", "ITA")
             ],
             [
                 ("Feyenoord Rotterdam", "NED"), ("Sporting Lissabon", "POR"), ("PSV Eindhoven", "NED"),

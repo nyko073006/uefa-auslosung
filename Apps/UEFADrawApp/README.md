@@ -27,6 +27,8 @@ geloescht bzw. ersetzt:
 ## Aufbau
 
 ```
+project.yml   XcodeGen-Spezifikation (Quelle der Projektstruktur)
+Resources/    Asset-Katalog (AppIcon, AccentColor)
 Sources/
   Shell/      App-Einstieg, Router, Abhaengigkeiten, Design-Tokens
   Setup/      Screen 1 - Toepfe, Regeln, Seed
@@ -36,14 +38,30 @@ Sources/
   Tests/      XCTest fuer die Praesentationslogik
 ```
 
-## Einbinden
+## Starten
 
-Es liegt bewusst kein eigenes Xcode-Projekt bei. Die Dateien werden in ein
-iOS-App-Target gezogen, das vom `DrawEngine`-Package abhaengt.
+```
+open UEFADrawApp.xcodeproj
+```
 
-- Deployment Target: iOS 17.0
-- `Sources/Tests/` gehoert in ein Test-Target, nicht ins App-Target
-- Der Code ist unter vollstaendiger strikter Concurrency warnungsfrei
+Das Projekt wird aus `project.yml` erzeugt. Nach Struktur-Aenderungen
+(neue Ordner, neue Targets, andere Build-Settings) neu generieren:
+
+```
+xcodegen generate
+```
+
+Struktur-Aenderungen gehoeren immer in `project.yml`, nicht ins generierte
+Projekt - sonst gehen sie beim naechsten Generieren verloren.
+
+- Deployment Target: iOS 17.0, iPhone und iPad
+- Targets: `UEFADrawApp` (App) und `UEFADrawAppTests` (24 Unit-Tests)
+- `SWIFT_STRICT_CONCURRENCY = complete`, der Code ist warnungsfrei
+
+## Sprache im Code
+
+Kommentare, Bezeichner und Dokumentation sind ASCII (siehe `AGENTS.md`).
+Sichtbare Texte in der App verwenden echte Umlaute.
 
 ## Details
 

@@ -1,6 +1,6 @@
 // ResultsScreen.swift
 //
-// Das fertige Ergebnis: 36 Spielplaene, durchsuchbar und teilbar.
+// Das fertige Ergebnis: alle Spielplaene, durchsuchbar und teilbar.
 
 import SwiftUI
 
@@ -16,6 +16,7 @@ struct ResultsScreen: View {
         List {
             Section {
                 potFilterRow
+                    .listRowInsets(EdgeInsets(top: 8, leading: 12, bottom: 8, trailing: 12))
             }
 
             Section {
@@ -27,7 +28,13 @@ struct ResultsScreen: View {
                     }
                 }
             } header: {
-                Text("\(viewModel.schedules.count) von \(viewModel.teamCount) Teams")
+                HStack {
+                    Text("Spielpläne")
+                    Spacer()
+                    Text("\(viewModel.schedules.count) von \(viewModel.teamCount)")
+                        .monospacedDigit()
+                        .contentTransition(.numericText())
+                }
             }
 
             Section("Lauf") {
@@ -69,6 +76,7 @@ struct ResultsScreen: View {
                 }
                 .accessibilityLabel("Ergebnis teilen")
             }
+
             ToolbarItem(placement: .cancellationAction) {
                 Button("Neue Auslosung") {
                     viewModel.startNewDraw()

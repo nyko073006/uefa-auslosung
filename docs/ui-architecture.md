@@ -86,6 +86,48 @@ iPhone zuerst, iPad-tauglich. Adaptive Grids statt fester Breiten, keine
 eigenen Split-View-Layouts. Damit ist die offene Frage aus `roadmap.md`
 beantwortet.
 
+### 6. Sprache im Code
+
+`AGENTS.md` verlangt moeglichst ASCII. Das gilt hier fuer Kommentare,
+Bezeichner und Dokumentation. **Sichtbare Texte in der App verwenden echte
+Umlaute**, weil "Spielplaene" auf dem Bildschirm schlicht falsch aussieht.
+
+Pruefbar: Nicht-ASCII darf ausschliesslich innerhalb von String-Literalen
+auftreten, nie in einem Kommentar oder Bezeichner.
+
+### 7. Bewegung
+
+Regeln, die im Code als `Tokens.Motion` festgehalten sind:
+
+- Dauern unter 300 ms; nur die Enthuellung selbst darf laenger tragen.
+- Eintritt nie aus `scale(0)` - gestartet wird bei 0,94 plus Deckkraft.
+- Austritt schneller als Eintritt (`revealTransition` ist asymmetrisch).
+- Druckfeedback ueber `PressableButtonStyle` bzw. die System-Button-Styles.
+- `accessibilityReduceMotion` wird respektiert: Deckkraft bleibt, Verschiebung
+  und Skalierung fallen weg. `Tokens.Motion.respecting(_:_:)` kapselt das.
+
+## Xcode-Projekt
+
+Das `.xcodeproj` wird mit XcodeGen aus `Apps/UEFADrawApp/project.yml` erzeugt
+und ist damit reproduzierbar und diff-freundlich:
+
+```
+cd Apps/UEFADrawApp
+xcodegen generate
+open UEFADrawApp.xcodeproj
+```
+
+Targets:
+
+- `UEFADrawApp` - iOS-App, Deployment Target 17.0, haengt am `DrawEngine`-Package
+  im Repo-Wurzelverzeichnis
+- `UEFADrawAppTests` - Unit-Tests aus `Sources/Tests`
+
+`SWIFT_STRICT_CONCURRENCY` steht auf `complete`; der Code ist warnungsfrei.
+
+Aenderungen an der Projektstruktur gehoeren in `project.yml`, nicht ins
+generierte Projekt.
+
 ## Die Naht zur Engine
 
 `Apps/UEFADrawApp/Sources/Support/DrawEnginePort.swift` beschreibt, was die UI

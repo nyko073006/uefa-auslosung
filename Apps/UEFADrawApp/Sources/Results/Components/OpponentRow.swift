@@ -8,27 +8,25 @@ struct OpponentRow: View {
 
     var body: some View {
         HStack(spacing: Tokens.Spacing.small) {
-            Image(systemName: opponent.venue.symbolName)
-                .font(.caption)
-                .frame(width: 18)
-                .foregroundStyle(Tokens.potColor(opponent.fromPot))
+            VenueBadge(venue: opponent.venue, tint: Tokens.potColor(opponent.fromPot))
 
             Text(opponent.team.name)
                 .font(.subheadline)
+                .lineLimit(1)
 
             Spacer(minLength: Tokens.Spacing.small)
 
             Text(opponent.team.association.id)
-                .font(.caption2)
+                .font(.caption2.weight(.medium))
                 .foregroundStyle(.secondary)
-
-            Text("T\(opponent.fromPot)")
-                .font(.caption2.weight(.semibold))
-                .foregroundStyle(Tokens.potColor(opponent.fromPot))
+                .padding(.horizontal, 5)
+                .padding(.vertical, 2)
+                .background(Capsule().fill(.quaternary.opacity(0.5)))
         }
+        .padding(.vertical, 3)
         .accessibilityElement(children: .combine)
         .accessibilityLabel(
-            "\(opponent.team.name), \(opponent.venue.accessibilityLabel), Topf \(opponent.fromPot)"
+            "\(opponent.team.name), \(opponent.venue.accessibilityLabel), aus Topf \(opponent.fromPot)"
         )
     }
 }

@@ -8,38 +8,76 @@ struct TeamScheduleCard: View {
 
     let schedule: TeamSchedule
 
+    @State private var isExpanded = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     var body: some View {
-        DisclosureGroup {
-            VStack(spacing: Tokens.Spacing.tight) {
-                ForEach(schedule.opponents) { opponent in
-                    OpponentRow(opponent: opponent)
+        DisclosureGroup(isExpanded: $isExpanded) {
+            VStack(spacing: 0) {
+                ForEach(Array(schedule.opponentsByPot.enumerated()), id: \.element.pot) { _, group in
+                    VStack(alignment: .leading, spacing: Tokens.Spacing.tight) {
+                        Text("Aus Topf \(group.pot)")
+                            .font(.caption2.weight(.semibold))
+                            .foregroundStyle(Tokens.potColor(group.pot))
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.top, Tokens.Spacing.small)
+
+                        ForEach(group.opponents) { opponent in
+                            OpponentRow(opponent: opponent)
+                        }
+                    }
                 }
             }
-            .padding(.top, Tokens.Spacing.tight)
         } label: {
             header
         }
+        .animation(
+            Tokens.Motion.respecting(reduceMotion, Tokens.Motion.move),
+            value: isExpanded
+        )
     }
 
     private var header: some View {
-        HStack(spacing: Tokens.Spacing.small) {
-            RoundedRectangle(cornerRadius: 3)
-                .fill(Tokens.potColor(schedule.team.potIndex))
-                .frame(width: 4, height: 30)
+        HStack(spacing: Tokens.Spacing.medium) {
+            RoundedRectangle(cornerRadius: 2.5, style: .continuous)
+                .fill(Tokens.potGradient(schedule.team.potIndex))
+                .frame(width: 5, height: 34)
 
-            VStack(alignment: .leading, spacing: 1) {
+            VStack(alignment: .leading, spacing: 2) {
                 Text(schedule.team.name)
                     .font(.subheadline.weight(.semibold))
-                Text("Topf \(schedule.team.potIndex) - \(schedule.team.association.name)")
-                    .font(.caption2)
-                    .foregroundStyle(.secondary)
+                    .lineLimit(1)
+
+                HStack(spacing: Tokens.Spacing.tight) {
+                    Text("Topf \(schedule.team.potIndex)")
+                    Text("·")
+                    Text(schedule.team.association.name)
+                }
+                .font(.caption2)
+                .foregroundStyle(.secondary)
             }
 
             Spacer(minLength: 0)
 
-            Text("\(schedule.homeCount)H / \(schedule.awayCount)A")
-                .font(.caption.monospacedDigit())
-                .foregroundStyle(.secondary)
+            HStack(spacing: 3) {
+                venuePill(count: schedule.homeCount, venue: .home)
+                venuePill(count: schedule.awayCount, venue: .away)
+            }
         }
+        .padding(.vertical, 2)
+    }
+
+    private func venuePill(count: Int, venue: Venue) -> some View {
+        HStack(spacing: 2) {
+            Image(systemName: venue.symbolName)
+                .font(.system(size: 9))
+            Text("\(count)")
+                .font(.caption2.monospacedDigit().weight(.medium))
+        }
+        .foregroundStyle(.secondary)
+        .padding(.horizontal, 6)
+        .padding(.vertical, 3)
+        .background(Capsule().fill(.quaternary.opacity(0.5)))
+        .accessibilityLabel("\(count) \(venue == .home ? "Heimspiele" : "Auswärtsspiele")")
     }
 }

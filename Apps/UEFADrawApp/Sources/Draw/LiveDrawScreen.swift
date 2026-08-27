@@ -8,6 +8,7 @@ import SwiftUI
 struct LiveDrawScreen: View {
 
     @State private var viewModel: LiveDrawViewModel
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     init(viewModel: LiveDrawViewModel) {
         _viewModel = State(initialValue: viewModel)
@@ -15,7 +16,7 @@ struct LiveDrawScreen: View {
 
     var body: some View {
         content
-            .navigationTitle("Auslosung laeuft")
+            .navigationTitle("Auslosung läuft")
             #if os(iOS)
             .navigationBarTitleDisplayMode(.inline)
             #endif
@@ -28,10 +29,8 @@ struct LiveDrawScreen: View {
         switch viewModel.phase {
         case .preparing:
             preparingView
-
         case .failed(let message):
             failureView(message)
-
         case .revealing, .finished:
             revealView
         }
@@ -41,22 +40,35 @@ struct LiveDrawScreen: View {
 
     private var preparingView: some View {
         VStack(spacing: Tokens.Spacing.large) {
-            Image(systemName: "circle.hexagongrid.circle")
-                .font(.system(size: 52))
-                .foregroundStyle(.tint)
-                .symbolEffect(.pulse)
+            ZStack {
+                Circle()
+                    .fill(
+                        LinearGradient(
+                            colors: [Tokens.potColor(1), Tokens.potColor(4)],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+                    .frame(width: 96, height: 96)
+                    .shadow(color: Tokens.potColor(1).opacity(0.3), radius: 16, y: 8)
+
+                Image(systemName: "circle.hexagongrid.fill")
+                    .font(.system(size: 40))
+                    .foregroundStyle(.white)
+                    .symbolEffect(.pulse, options: reduceMotion ? .nonRepeating : .repeating)
+            }
 
             VStack(spacing: Tokens.Spacing.tight) {
                 Text("Die Trommel dreht sich")
-                    .font(.headline)
-                Text("Die Engine ermittelt eine gueltige Auslosung.")
+                    .font(.title3.weight(.semibold))
+                Text("Die Engine ermittelt eine gültige Auslosung.")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
+                    .multilineTextAlignment(.center)
             }
-
-            ProgressView()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding(Tokens.Spacing.large)
     }
 
     private func failureView(_ message: String) -> some View {
@@ -87,11 +99,21 @@ struct LiveDrawScreen: View {
                     expectedCount: viewModel.opponentsPerTeam
                 )
 
+                // Reservierte Hoehe waere hier falsch: der Hinweis erscheint nur
+                // gelegentlich und soll den Rest nicht dauerhaft nach unten druecken.
                 if let rejection = viewModel.activeRejection {
                     RejectionBanner(candidate: rejection.team, reason: rejection.reason)
+                        .revealTransition(reduceMotion: reduceMotion)
                 }
 
-                AssociationTallyBar(tally: viewModel.associationTally)
+                if !viewModel.associationTally.isEmpty {
+                    VStack(alignment: .leading, spacing: Tokens.Spacing.small) {
+                        Text("Gegner nach Verband")
+                            .font(.caption.weight(.semibold))
+                            .foregroundStyle(.secondary)
+                        AssociationTallyBar(tally: viewModel.associationTally)
+                    }
+                }
 
                 OpponentSlotGrid(
                     pots: viewModel.potIDs,
@@ -99,13 +121,13 @@ struct LiveDrawScreen: View {
                     revealed: viewModel.revealedOpponents
                 )
 
-                Text("\(viewModel.completedTeamCount) von \(viewModel.totalTeamCount) Teams ausgelost")
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
-                    .frame(maxWidth: .infinity, alignment: .center)
+                footer
             }
             .padding(Tokens.Spacing.medium)
-            .animation(Tokens.Motion.banner, value: viewModel.activeRejection?.reason)
+            .animation(
+                Tokens.Motion.respecting(reduceMotion, Tokens.Motion.enter),
+                value: viewModel.activeRejection?.reason
+            )
         }
         .safeAreaInset(edge: .bottom) {
             if let playback = viewModel.playback {
@@ -122,6 +144,23 @@ struct LiveDrawScreen: View {
                 )
             }
         }
+    }
+
+    private var footer: some View {
+        HStack(spacing: Tokens.Spacing.small) {
+            Image(systemName: "checkmark.circle.fill")
+                .foregroundStyle(.green)
+            Text("\(viewModel.completedTeamCount) von \(viewModel.totalTeamCount) Teams ausgelost")
+                .contentTransition(.numericText())
+        }
+        .font(.footnote)
+        .foregroundStyle(.secondary)
+        .frame(maxWidth: .infinity, alignment: .center)
+        .padding(.top, Tokens.Spacing.small)
+        .animation(
+            Tokens.Motion.respecting(reduceMotion, Tokens.Motion.state),
+            value: viewModel.completedTeamCount
+        )
     }
 }
 

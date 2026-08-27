@@ -70,7 +70,7 @@ enum Venue: String, Hashable, Sendable, Codable, CaseIterable {
     var accessibilityLabel: String {
         switch self {
         case .home: "Heimspiel"
-        case .away: "Auswaertsspiel"
+        case .away: "Auswärtsspiel"
         }
     }
 }

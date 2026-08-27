@@ -31,7 +31,7 @@ struct DrawResultExport: Transferable, Sendable {
                 lines.append("  Topf \(group.pot): \(entries.joined(separator: ", "))")
             }
 
-            lines.append("  \(schedule.homeCount) Heim / \(schedule.awayCount) Auswaerts")
+            lines.append("  \(schedule.homeCount) Heim / \(schedule.awayCount) Auswärts")
             lines.append("")
         }
 

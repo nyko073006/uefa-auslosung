@@ -24,7 +24,7 @@ struct SeedFieldView: View {
                     Image(systemName: "die.face.5")
                 }
                 .buttonStyle(.bordered)
-                .accessibilityLabel("Neuen Seed wuerfeln")
+                .accessibilityLabel("Neuen Seed würfeln")
             }
 
             if !isValid {
