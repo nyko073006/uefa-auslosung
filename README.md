@@ -38,6 +38,7 @@ Die spaetere App soll:
 - `Packages/DrawEngine/` - fachliche Kernlogik
 - `Apps/UEFADrawApp/` - spaetere SwiftUI-App
 - `Tests/DrawEngineTests/` - Tests fuer die Auslosungslogik
+- `Resources/Design/` - CL-Logo, Draw-Optik und 36 Teamlogos
 - `AGENTS.md` - Arbeitsregeln fuer KI-gestuetzte Aenderungen
 - `docs/vision.md` - Produktziel und Nutzererlebnis
 - `docs/architecture.md` - technische Zielarchitektur
