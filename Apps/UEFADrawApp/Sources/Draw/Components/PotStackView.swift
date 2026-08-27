@@ -13,7 +13,7 @@ struct PotStackView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
-        LazyVGrid(columns: Tokens.potStackGrid, spacing: Tokens.Spacing.small) {
+        LazyVGrid(columns: Tokens.evenColumns(pots.count), spacing: Tokens.Spacing.small) {
             ForEach(pots) { pot in
                 potTile(pot)
             }

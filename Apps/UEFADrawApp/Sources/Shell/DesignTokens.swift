@@ -86,14 +86,19 @@ enum Tokens {
 
     // MARK: - Raster
 
-    /// Gegner-Raster: zwei Spalten auf dem iPhone, mehr sobald Platz da ist.
-    static let opponentGrid = [
-        GridItem(.adaptive(minimum: 152, maximum: 260), spacing: Spacing.small)
-    ]
+    /// Lesbare Maximalbreite. Ohne sie zieht der Inhalt auf dem iPad ueber die
+    /// volle Breite auseinander und wirkt verloren.
+    static let contentMaxWidth: CGFloat = 760
 
-    static let potStackGrid = [
-        GridItem(.adaptive(minimum: 78, maximum: 170), spacing: Spacing.small)
-    ]
+    /// Feste Spaltenzahl statt `.adaptive`: adaptive Raster deckeln bei `maximum`
+    /// und lassen den Rest der Breite ungenutzt - auf dem iPad kleben die Kacheln
+    /// dann am linken Rand. Gleichmaessig verteilte Spalten fuellen immer.
+    static func evenColumns(_ count: Int) -> [GridItem] {
+        Array(
+            repeating: GridItem(.flexible(), spacing: Spacing.small),
+            count: max(count, 1)
+        )
+    }
 }
 
 // MARK: - Druckfeedback

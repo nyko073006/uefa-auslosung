@@ -21,7 +21,7 @@ struct OpponentSlotGrid: View {
                 VStack(alignment: .leading, spacing: Tokens.Spacing.small) {
                     header(pot: pot, filled: entries.count)
 
-                    LazyVGrid(columns: Tokens.opponentGrid, spacing: Tokens.Spacing.small) {
+                    LazyVGrid(columns: Tokens.evenColumns(slotsPerPot), spacing: Tokens.Spacing.small) {
                         ForEach(0..<slotsPerPot, id: \.self) { index in
                             if index < entries.count {
                                 filledSlot(entries[index])

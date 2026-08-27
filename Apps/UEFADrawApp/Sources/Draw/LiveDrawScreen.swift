@@ -124,6 +124,10 @@ struct LiveDrawScreen: View {
                 footer
             }
             .padding(Tokens.Spacing.medium)
+            // Lesbare Spaltenbreite: ohne Deckelung zerfaellt der Inhalt auf dem
+            // iPad in weite Leerflaechen.
+            .frame(maxWidth: Tokens.contentMaxWidth)
+            .frame(maxWidth: .infinity)
             .animation(
                 Tokens.Motion.respecting(reduceMotion, Tokens.Motion.enter),
                 value: viewModel.activeRejection?.reason
