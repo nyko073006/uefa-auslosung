@@ -23,6 +23,7 @@
 		54F5CA6FDE99601569AC7767 /* PlaybackControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA91FF3F584EF683E19D960 /* PlaybackControllerTests.swift */; };
 		5B4EB3D60FD2FC20183CDC22 /* SampleTeams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FB6C98537BAD94517C7267 /* SampleTeams.swift */; };
 		5BFBF4400ED85A74FE64D447 /* TeamScheduleCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68572F723199B4EC3C52C069 /* TeamScheduleCard.swift */; };
+		64B34A2399CB07339256798F /* CompetitionMark.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98DF49331D66C5A0C908720 /* CompetitionMark.swift */; };
 		69A10495D9DEECA3C7E8ADC7 /* PotSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA83F3F2D77344CC364D9C9 /* PotSectionView.swift */; };
 		6D53E45E69919335E911FF95 /* TeamLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A5C12ECECB8F6A73447826 /* TeamLogoView.swift */; };
 		6EB86F20F546E5FBF46047FB /* ResultsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820276F5B7198A0B3C39780C /* ResultsScreen.swift */; };
@@ -104,6 +105,7 @@
 		CB5513677E5F00E2B6333D2D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EEA6A6F5C9041869E706E183 /* UEFADrawApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UEFADrawApp.swift; sourceTree = "<group>"; };
 		F6D00F990BC02AA0FCDB0461 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		F98DF49331D66C5A0C908720 /* CompetitionMark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompetitionMark.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -182,6 +184,7 @@
 			children = (
 				9B84F220F511243937D28758 /* AppDependencies.swift */,
 				BF20AA29834940A40080DEE5 /* AppRouter.swift */,
+				F98DF49331D66C5A0C908720 /* CompetitionMark.swift */,
 				30D3E0698070F43A588001A5 /* DesignTokens.swift */,
 				5C495627C20DA799D5B1E744 /* DrawBackground.swift */,
 				F6D00F990BC02AA0FCDB0461 /* RootView.swift */,
@@ -373,6 +376,7 @@
 				A7B116B1A0B75751F4107C93 /* AppDependencies.swift in Sources */,
 				1577A472702205DCEE489FAE /* AppRouter.swift in Sources */,
 				1C4B8B3B71B05BAFBFC3586D /* AssociationTallyBar.swift in Sources */,
+				64B34A2399CB07339256798F /* CompetitionMark.swift in Sources */,
 				02D15D7B9D05986FE28AF382 /* ConstraintToggleRow.swift in Sources */,
 				267B77739D191702440DA35B /* DesignTokens.swift in Sources */,
 				D94F4C409904BAD3AFFE2E31 /* DomainStubs.swift in Sources */,

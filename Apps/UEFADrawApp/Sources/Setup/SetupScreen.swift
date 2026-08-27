@@ -16,6 +16,13 @@ struct SetupScreen: View {
     var body: some View {
         Form {
             Section {
+                CompetitionMark(width: 170, tint: .white)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, Tokens.Spacing.medium)
+            }
+            .listRowBackground(Color.clear)
+
+            Section {
                 SeedFieldView(
                     seedText: $viewModel.seedText,
                     isValid: viewModel.isSeedValid,

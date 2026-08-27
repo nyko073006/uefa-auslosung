@@ -42,6 +42,9 @@ struct LiveDrawScreen: View {
 
     private var preparingView: some View {
         VStack(spacing: Tokens.Spacing.large) {
+            CompetitionMark(width: 190, tint: .white)
+                .padding(.bottom, Tokens.Spacing.medium)
+
             ZStack {
                 Circle()
                     .strokeBorder(Tokens.Brand.cyan.opacity(0.75), lineWidth: 2)

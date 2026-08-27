@@ -129,6 +129,28 @@ Loskugel bewusst nur 54 pt, darueber wuerden sie weich.
 `Team.logoName` ist optional: selbst angelegte Teams im Setup kommen ohne
 Wappen aus.
 
+### Wortmarke und App-Icon
+
+`uefa-champions-league-logo.svg` liegt als Vektor-Bildsatz
+`ChampionsLeagueLogo` im Katalog, auf `template` gestellt und damit
+einfaerbbar - im Original ist die Marke dunkelblau und waere auf dem dunklen
+Grund unsichtbar. `CompetitionMark` zeichnet sie im Setup-Kopf und im
+Ladezustand der Auslosung.
+
+Das App-Icon ist aus derselben Vorlage erzeugt: `Resources/Design`-SVG,
+weiss eingefaerbt, auf dem Blauverlauf mit denselben konzentrischen Boegen
+wie `DrawBackground`. Neu erzeugen laesst es sich mit einem kurzen
+AppKit-Skript (`NSImage` liest SVG ab macOS 13); die 1024er PNG liegt fertig
+im Katalog.
+
+Nicht verwendet werden `uefa-2026-27-team-badges.webp` und
+`team-logo-contact-sheet.png` - das sind die Quellen, aus denen die
+Einzelwappen geschnitten wurden.
+
+> Rechtehinweis: `Resources/Design/README.md` weist die UEFA-Marken und die
+> Clubwappen als geschuetzt aus und den Ordner als Entwicklungsreferenz. Fuer
+> eine Veroeffentlichung der App waere das gesondert zu klaeren.
+
 ### 9. Bewegung
 
 Regeln, die im Code als `Tokens.Motion` festgehalten sind:
