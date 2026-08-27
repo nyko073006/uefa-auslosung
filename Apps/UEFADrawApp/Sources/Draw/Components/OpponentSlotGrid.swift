@@ -44,45 +44,51 @@ struct OpponentSlotGrid: View {
         HStack(spacing: Tokens.Spacing.small) {
             Capsule()
                 .fill(Tokens.potGradient(pot))
-                .frame(width: 14, height: 4)
+                .frame(width: 16, height: 4)
 
             Text("Aus Topf \(pot)")
                 .font(.caption.weight(.semibold))
-                .foregroundStyle(.secondary)
+                .tracking(0.6)
+                .foregroundStyle(Tokens.potColor(pot))
 
             Spacer()
 
             Text("\(filled)/\(slotsPerPot)")
                 .font(.caption2.monospacedDigit())
-                .foregroundStyle(.tertiary)
+                .foregroundStyle(Tokens.Brand.textTertiary)
                 .contentTransition(.numericText())
         }
     }
 
     private func filledSlot(_ entry: (opponent: RevealedOpponent, team: Team)) -> some View {
-        HStack(spacing: Tokens.Spacing.small) {
-            VenueBadge(venue: entry.opponent.venue, tint: Tokens.potColor(entry.opponent.fromPot))
+        let tint = Tokens.potColor(entry.opponent.fromPot)
+
+        return HStack(spacing: Tokens.Spacing.small) {
+            TeamLogoView(team: entry.team, size: 26)
 
             VStack(alignment: .leading, spacing: 1) {
                 Text(entry.team.name)
                     .font(.subheadline.weight(.medium))
+                    .foregroundStyle(.white)
                     .lineLimit(1)
-                    .minimumScaleFactor(0.85)
+                    .minimumScaleFactor(0.65)
                 Text(entry.team.association.id)
                     .font(.caption2)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Tokens.Brand.textSecondary)
             }
 
             Spacer(minLength: 0)
+
+            VenueBadge(venue: entry.opponent.venue, tint: tint)
         }
         .padding(Tokens.Spacing.small)
         .background {
             RoundedRectangle(cornerRadius: Tokens.Radius.chip, style: .continuous)
-                .fill(Tokens.potSurface(entry.opponent.fromPot, emphasis: 0.14))
+                .fill(Tokens.potSurface(entry.opponent.fromPot, emphasis: 0.16))
         }
         .overlay {
             RoundedRectangle(cornerRadius: Tokens.Radius.chip, style: .continuous)
-                .strokeBorder(Tokens.potColor(entry.opponent.fromPot).opacity(0.2), lineWidth: 1)
+                .strokeBorder(tint.opacity(0.45), lineWidth: 1)
         }
         .accessibilityElement(children: .combine)
         .accessibilityLabel(
@@ -93,10 +99,10 @@ struct OpponentSlotGrid: View {
     private func emptySlot(pot: Int) -> some View {
         RoundedRectangle(cornerRadius: Tokens.Radius.chip, style: .continuous)
             .strokeBorder(
-                Tokens.potColor(pot).opacity(0.22),
-                style: StrokeStyle(lineWidth: 1.5, dash: [5, 4])
+                Tokens.potColor(pot).opacity(0.28),
+                style: StrokeStyle(lineWidth: 1.5, dash: [5, 5])
             )
-            .frame(height: 48)
+            .frame(height: 50)
             .accessibilityHidden(true)
     }
 }
@@ -110,11 +116,11 @@ struct VenueBadge: View {
     var body: some View {
         Image(systemName: venue.symbolName)
             .font(.caption2.weight(.semibold))
-            .foregroundStyle(venue == .home ? .white : tint)
+            .foregroundStyle(venue == .home ? Tokens.Brand.deep : tint)
             .frame(width: 24, height: 24)
             .background {
-                RoundedRectangle(cornerRadius: 7, style: .continuous)
-                    .fill(venue == .home ? AnyShapeStyle(tint) : AnyShapeStyle(tint.opacity(0.15)))
+                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                    .fill(venue == .home ? AnyShapeStyle(tint) : AnyShapeStyle(tint.opacity(0.18)))
             }
             .accessibilityHidden(true)
     }

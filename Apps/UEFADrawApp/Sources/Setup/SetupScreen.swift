@@ -22,10 +22,11 @@ struct SetupScreen: View {
                     onRandomize: viewModel.randomizeSeed
                 )
             } header: {
-                Text("Zufall")
+                sectionTitle("Zufall")
             } footer: {
-                Text("Derselbe Seed erzeugt dieselbe Auslosung – teilbar und wiederholbar.")
+                footnote("Derselbe Seed erzeugt dieselbe Auslosung – teilbar und wiederholbar.")
             }
+            .listRowBackground(Tokens.Brand.surface)
 
             if !viewModel.constraints.isEmpty {
                 Section {
@@ -38,10 +39,11 @@ struct SetupScreen: View {
                         }
                     }
                 } header: {
-                    Text("Regeln")
+                    sectionTitle("Regeln")
                 } footer: {
-                    Text("Die Regeln stammen aus der Draw-Engine. Die App bewertet sie nicht.")
+                    footnote("Die Regeln stammen aus der Draw-Engine. Die App bewertet sie nicht.")
                 }
+                .listRowBackground(Tokens.Brand.surface)
             }
 
             ForEach(viewModel.pots.indices, id: \.self) { index in
@@ -50,13 +52,17 @@ struct SetupScreen: View {
 
             let globalIssues = viewModel.issues.filter { $0.potIndex == nil }
             if !globalIssues.isEmpty {
-                Section("Hinweise") {
+                Section {
                     ForEach(globalIssues) { issue in
                         IssueRow(issue: issue)
                     }
+                } header: {
+                    sectionTitle("Hinweise")
                 }
+                .listRowBackground(Tokens.Brand.surface)
             }
         }
+        .brandScreenBackground()
         .navigationTitle("Auslosung einrichten")
         #if os(iOS)
         .navigationBarTitleDisplayMode(.large)
@@ -78,11 +84,24 @@ struct SetupScreen: View {
         .onChange(of: viewModel.seedText) { _, _ in viewModel.validate() }
     }
 
+    private func sectionTitle(_ text: String) -> some View {
+        Text(text.uppercased())
+            .font(.system(size: 11, weight: .bold))
+            .tracking(1.2)
+            .foregroundStyle(Tokens.Brand.textSecondary)
+    }
+
+    private func footnote(_ text: String) -> some View {
+        Text(text)
+            .foregroundStyle(Tokens.Brand.textSecondary)
+    }
+
     private var startBar: some View {
         VStack(spacing: Tokens.Spacing.small) {
             HStack(spacing: Tokens.Spacing.small) {
                 Label("\(viewModel.totalTeamCount) Teams", systemImage: "person.3.fill")
                     .contentTransition(.numericText())
+                    .foregroundStyle(Tokens.Brand.textSecondary)
 
                 Spacer()
 
@@ -90,30 +109,46 @@ struct SetupScreen: View {
                     Label(first.message, systemImage: "exclamationmark.circle.fill")
                         .lineLimit(1)
                         .truncationMode(.tail)
-                        .foregroundStyle(.red)
+                        .foregroundStyle(Tokens.Brand.magenta)
                 } else {
                     Label("Bereit", systemImage: "checkmark.circle.fill")
-                        .foregroundStyle(.green)
+                        .foregroundStyle(Tokens.Brand.green)
                 }
             }
             .font(.footnote)
-            .foregroundStyle(.secondary)
 
             Button {
                 viewModel.start()
             } label: {
                 Label("Auslosung starten", systemImage: "play.fill")
                     .font(.body.weight(.semibold))
+                    .foregroundStyle(Tokens.Brand.deep)
                     .frame(maxWidth: .infinity)
-                    .padding(.vertical, 6)
+                    .padding(.vertical, 12)
+                    .background {
+                        RoundedRectangle(cornerRadius: Tokens.Radius.chip, style: .continuous)
+                            .fill(
+                                viewModel.isStartable
+                                    ? AnyShapeStyle(
+                                        LinearGradient(
+                                            colors: [Tokens.Brand.cyan, Tokens.Brand.green],
+                                            startPoint: .leading,
+                                            endPoint: .trailing
+                                        ))
+                                    : AnyShapeStyle(Tokens.Brand.hairline)
+                            )
+                    }
             }
-            .buttonStyle(.borderedProminent)
-            .buttonBorderShape(.roundedRectangle(radius: Tokens.Radius.chip))
-            .controlSize(.large)
+            .buttonStyle(PressableButtonStyle())
             .disabled(!viewModel.isStartable)
         }
         .padding(Tokens.Spacing.medium)
-        .background(.bar)
+        .frame(maxWidth: Tokens.contentMaxWidth)
+        .frame(maxWidth: .infinity)
+        .background(.ultraThinMaterial)
+        .overlay(alignment: .top) {
+            Rectangle().fill(Tokens.Brand.hairline).frame(height: 1)
+        }
         .animation(Tokens.Motion.state, value: viewModel.isStartable)
     }
 }
@@ -131,7 +166,7 @@ struct IssueRow: View {
                   ? "exclamationmark.octagon.fill"
                   : "exclamationmark.triangle.fill")
         }
-        .foregroundStyle(issue.severity == .blocking ? .red : .orange)
+        .foregroundStyle(issue.severity == .blocking ? Tokens.Brand.magenta : Tokens.Brand.yellow)
     }
 }
 
@@ -140,4 +175,5 @@ struct IssueRow: View {
     return NavigationStack {
         SetupScreen(viewModel: model.setupViewModel)
     }
+    .preferredColorScheme(.dark)
 }

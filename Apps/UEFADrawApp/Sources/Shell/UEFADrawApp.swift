@@ -17,6 +17,10 @@ struct UEFADrawApp: App {
     var body: some Scene {
         WindowGroup {
             RootView(model: model)
+                // Die Optik ist bewusst auf Dunkel festgelegt und folgt nicht
+                // dem Systemschema - siehe Resources/Design/draw-style.md.
+                .preferredColorScheme(.dark)
+                .tint(Tokens.Brand.cyan)
         }
     }
 }

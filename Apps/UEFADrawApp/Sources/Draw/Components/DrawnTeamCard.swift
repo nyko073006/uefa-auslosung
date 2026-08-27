@@ -1,6 +1,7 @@
 // DrawnTeamCard.swift
 //
 // Die Kugel des gerade gezogenen Teams - der Spannungsmoment der Auslosung.
+// Das Wappen sitzt im Zentrum auf ruhiger Flaeche, wie in draw-style.md gefordert.
 
 import SwiftUI
 
@@ -12,6 +13,10 @@ struct DrawnTeamCard: View {
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
+    private var tint: Color {
+        Tokens.potColor(team?.potIndex ?? 0)
+    }
+
     var body: some View {
         VStack(spacing: Tokens.Spacing.medium) {
             ball
@@ -20,13 +25,15 @@ struct DrawnTeamCard: View {
                 VStack(spacing: Tokens.Spacing.tight) {
                     Text(team.name)
                         .font(.title2.weight(.bold))
+                        .foregroundStyle(.white)
                         .multilineTextAlignment(.center)
                         .minimumScaleFactor(0.7)
                         .lineLimit(2)
 
-                    Text(team.association.name)
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
+                    Text(team.association.name.uppercased())
+                        .font(.caption.weight(.semibold))
+                        .tracking(1.4)
+                        .foregroundStyle(tint)
                 }
                 .id(team.id)
                 .revealTransition(reduceMotion: reduceMotion)
@@ -35,7 +42,7 @@ struct DrawnTeamCard: View {
             } else {
                 Text("Warte auf die nächste Kugel")
                     .font(.headline)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Tokens.Brand.textSecondary)
             }
         }
         .frame(maxWidth: .infinity)
@@ -43,54 +50,52 @@ struct DrawnTeamCard: View {
         .padding(.horizontal, Tokens.Spacing.medium)
         .background {
             RoundedRectangle(cornerRadius: Tokens.Radius.card, style: .continuous)
-                .fill(Tokens.potSurface(team?.potIndex ?? 0))
+                .fill(Tokens.Brand.surface)
         }
         .overlay {
             RoundedRectangle(cornerRadius: Tokens.Radius.card, style: .continuous)
-                .strokeBorder(
-                    Tokens.potColor(team?.potIndex ?? 0).opacity(0.35),
-                    lineWidth: 1
-                )
+                .strokeBorder(tint.opacity(0.4), lineWidth: 1)
         }
         .animation(Tokens.Motion.respecting(reduceMotion, Tokens.Motion.ball), value: team)
     }
 
-    /// Die Loskugel. Beim Teamwechsel wird sie neu aufgebaut, damit der
-    /// Uebergang als eigener Moment lesbar ist.
+    /// Die Loskugel: dunkle Scheibe, Neonring, Wappen in der Mitte.
     private var ball: some View {
         ZStack {
             Circle()
-                .fill(Tokens.potGradient(team?.potIndex ?? 0))
-                .frame(width: Tokens.Radius.ball, height: Tokens.Radius.ball)
-                .overlay {
-                    // Angedeutetes Glanzlicht - gibt der Kugel Koerper.
-                    Circle()
-                        .fill(
-                            LinearGradient(
-                                colors: [.white.opacity(0.45), .clear],
-                                startPoint: .topLeading,
-                                endPoint: .center
-                            )
-                        )
-                }
-                .shadow(
-                    color: Tokens.potColor(team?.potIndex ?? 0).opacity(0.35),
-                    radius: 12, y: 6
+                .fill(
+                    RadialGradient(
+                        colors: [tint.opacity(0.30), tint.opacity(0.05)],
+                        center: .topLeading,
+                        startRadius: 0,
+                        endRadius: Tokens.Radius.ball
+                    )
                 )
 
+            Circle()
+                .strokeBorder(tint.opacity(0.85), lineWidth: 2)
+
+            // Zweiter, weiterer Ring - greift das Linienmuster des Hintergrunds auf.
+            Circle()
+                .strokeBorder(tint.opacity(0.22), lineWidth: 1)
+                .padding(-9)
+
             if let team {
-                Text(team.association.id)
-                    .font(.title3.weight(.heavy))
-                    .foregroundStyle(.white)
-                    .shadow(radius: 1, y: 1)
+                TeamLogoView(team: team, size: 54)
                     .id(team.id)
-                    .transition(reduceMotion ? .opacity : .scale(scale: 0.7).combined(with: .opacity))
+                    .transition(
+                        reduceMotion
+                            ? .opacity
+                            : .scale(scale: 0.7).combined(with: .opacity)
+                    )
             } else {
                 Image(systemName: "questionmark")
-                    .font(.title2.weight(.bold))
-                    .foregroundStyle(.white.opacity(0.7))
+                    .font(.title.weight(.bold))
+                    .foregroundStyle(Tokens.Brand.textTertiary)
             }
         }
+        .frame(width: Tokens.Radius.ball, height: Tokens.Radius.ball)
+        .shadow(color: tint.opacity(0.45), radius: 18)
         .accessibilityHidden(true)
     }
 
@@ -99,12 +104,8 @@ struct DrawnTeamCard: View {
         HStack(spacing: Tokens.Spacing.tight) {
             ForEach(0..<max(expectedCount, 0), id: \.self) { index in
                 Capsule()
-                    .fill(
-                        index < revealedCount
-                            ? AnyShapeStyle(Tokens.potColor(team?.potIndex ?? 0))
-                            : AnyShapeStyle(.quaternary)
-                    )
-                    .frame(width: index < revealedCount ? 14 : 8, height: 4)
+                    .fill(index < revealedCount ? tint : Tokens.Brand.hairline)
+                    .frame(width: index < revealedCount ? 16 : 8, height: 4)
             }
         }
         .animation(Tokens.Motion.respecting(reduceMotion, Tokens.Motion.move), value: revealedCount)

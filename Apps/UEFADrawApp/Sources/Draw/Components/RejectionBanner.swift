@@ -16,17 +16,18 @@ struct RejectionBanner: View {
         HStack(alignment: .top, spacing: Tokens.Spacing.medium) {
             Image(systemName: "xmark")
                 .font(.caption.weight(.bold))
-                .foregroundStyle(.white)
+                .foregroundStyle(Tokens.Brand.deep)
                 .frame(width: 24, height: 24)
-                .background(Circle().fill(.orange))
+                .background(Circle().fill(Tokens.Brand.yellow))
 
             VStack(alignment: .leading, spacing: Tokens.Spacing.tight) {
                 Text("\(candidate.name) nicht möglich")
                     .font(.subheadline.weight(.semibold))
+                    .foregroundStyle(.white)
 
                 Text(reason)
                     .font(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Tokens.Brand.textSecondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
 
@@ -35,12 +36,16 @@ struct RejectionBanner: View {
         .padding(Tokens.Spacing.medium)
         .background {
             RoundedRectangle(cornerRadius: Tokens.Radius.chip, style: .continuous)
-                .fill(.orange.opacity(0.12))
+                .fill(Tokens.Brand.yellow.opacity(0.10))
+        }
+        .overlay {
+            RoundedRectangle(cornerRadius: Tokens.Radius.chip, style: .continuous)
+                .strokeBorder(Tokens.Brand.yellow.opacity(0.35), lineWidth: 1)
         }
         .overlay(alignment: .leading) {
             // Schmaler Akzent an der Kante - macht den Hinweis scanbar.
             RoundedRectangle(cornerRadius: 2, style: .continuous)
-                .fill(.orange)
+                .fill(Tokens.Brand.yellow)
                 .frame(width: 3)
                 .padding(.vertical, Tokens.Spacing.small)
         }

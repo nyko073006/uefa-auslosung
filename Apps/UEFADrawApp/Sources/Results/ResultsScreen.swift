@@ -18,6 +18,7 @@ struct ResultsScreen: View {
                 potFilterRow
                     .listRowInsets(EdgeInsets(top: 8, leading: 12, bottom: 8, trailing: 12))
             }
+            .listRowBackground(Color.clear)
 
             Section {
                 if viewModel.schedules.isEmpty {
@@ -29,23 +30,35 @@ struct ResultsScreen: View {
                 }
             } header: {
                 HStack {
-                    Text("Spielpläne")
+                    Text("SPIELPLÄNE")
                     Spacer()
                     Text("\(viewModel.schedules.count) von \(viewModel.teamCount)")
                         .monospacedDigit()
                         .contentTransition(.numericText())
                 }
+                .font(.system(size: 11, weight: .bold))
+                .tracking(1.2)
+                .foregroundStyle(Tokens.Brand.textSecondary)
             }
+            .listRowBackground(Tokens.Brand.surface)
 
-            Section("Lauf") {
+            Section {
                 LabeledContent("Seed") {
                     Text(viewModel.seedText)
                         .font(.body.monospacedDigit())
+                        .foregroundStyle(Tokens.Brand.cyan)
                         .textSelection(.enabled)
                 }
                 LabeledContent("Paarungen", value: "\(viewModel.matchupCount)")
+            } header: {
+                Text("LAUF")
+                    .font(.system(size: 11, weight: .bold))
+                    .tracking(1.2)
+                    .foregroundStyle(Tokens.Brand.textSecondary)
             }
+            .listRowBackground(Tokens.Brand.surface)
         }
+        .brandScreenBackground()
         .searchable(text: $viewModel.searchText, prompt: "Team oder Verband suchen")
         .navigationTitle("Ergebnis")
         #if os(iOS)
@@ -98,6 +111,7 @@ struct ResultsScreen: View {
 
 #Preview {
     ResultsPreviewHost()
+        .preferredColorScheme(.dark)
 }
 
 private struct ResultsPreviewHost: View {

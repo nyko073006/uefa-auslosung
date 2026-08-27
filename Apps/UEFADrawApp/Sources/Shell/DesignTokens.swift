@@ -1,7 +1,11 @@
 // DesignTokens.swift
 //
-// Zentrale Darstellungswerte. Haelt die Views schlank und die Optik konsistent.
-// Adaptive Grids statt fester Breiten - dadurch traegt das iPhone-Layout das iPad mit.
+// Zentrale Darstellungswerte nach der Vorgabe aus Resources/Design/draw-style.md:
+// tiefes UEFA-Blau, Neon-Akzente, runde Formen, hoher Kontrast.
+//
+// Die App legt sich bewusst auf Dunkel fest ("dunkle UEFA-Inspiration statt
+// generischer hellgrauer Screens"), deshalb sind die Farben gesetzt und nicht
+// vom Systemschema abhaengig.
 //
 // Hinweis zur Sprache: Kommentare und Bezeichner bleiben ASCII (siehe AGENTS.md),
 // sichtbare Texte in der App verwenden echte Umlaute.
@@ -19,9 +23,31 @@ enum Tokens {
     }
 
     enum Radius {
-        static let card: CGFloat = 16
-        static let chip: CGFloat = 10
-        static let ball: CGFloat = 88
+        static let card: CGFloat = 18
+        static let chip: CGFloat = 12
+        static let ball: CGFloat = 104
+    }
+
+    // MARK: - Markenfarben
+
+    enum Brand {
+        /// Grundtoene des Hintergrunds, von unten nach oben aufhellend.
+        static let deep = Color(red: 0.016, green: 0.031, blue: 0.114)
+        static let mid = Color(red: 0.035, green: 0.071, blue: 0.243)
+        static let lift = Color(red: 0.071, green: 0.129, blue: 0.404)
+
+        /// Neon-Akzente. Vier Farben, vier Toepfe.
+        static let cyan = Color(red: 0.180, green: 0.898, blue: 0.996)
+        static let magenta = Color(red: 0.976, green: 0.263, blue: 0.678)
+        static let yellow = Color(red: 1.000, green: 0.827, blue: 0.267)
+        static let green = Color(red: 0.290, green: 0.949, blue: 0.573)
+
+        /// Flaechen und Linien auf dem dunklen Grund.
+        static let surface = Color.white.opacity(0.065)
+        static let surfaceRaised = Color.white.opacity(0.10)
+        static let hairline = Color.white.opacity(0.14)
+        static let textSecondary = Color.white.opacity(0.62)
+        static let textTertiary = Color.white.opacity(0.38)
     }
 
     // MARK: - Bewegung
@@ -29,13 +55,9 @@ enum Tokens {
     /// Dauern bleiben unter 300 ms, damit die Bedienung reaktionsschnell wirkt.
     /// Nur die Enthuellung selbst darf etwas laenger sein - sie ist die Inszenierung.
     enum Motion {
-        /// Eintritt und Austritt: startet schnell, wirkt sofort.
         static let enter = Animation.spring(duration: 0.34, bounce: 0.18)
-        /// Bewegung auf dem Bildschirm.
         static let move = Animation.spring(duration: 0.28, bounce: 0.10)
-        /// Reine Zustands- und Farbwechsel.
         static let state = Animation.easeOut(duration: 0.22)
-        /// Druckfeedback.
         static let press = Animation.easeOut(duration: 0.16)
         /// Der Moment, in dem eine Kugel gezogen wird - darf tragen.
         static let ball = Animation.spring(duration: 0.46, bounce: 0.24)
@@ -45,40 +67,36 @@ enum Tokens {
         static func respecting(_ reduceMotion: Bool, _ animation: Animation) -> Animation {
             reduceMotion ? .easeOut(duration: 0.18) : animation
         }
-
-        /// Gestaffelte Verzoegerung fuer Listen. Kurz halten, sonst wirkt es traege.
-        static func stagger(_ index: Int, step: Double = 0.045, cap: Double = 0.27) -> Double {
-            min(Double(index) * step, cap)
-        }
     }
 
-    // MARK: - Farben
+    // MARK: - Toepfe
 
     /// Farbe je Lostopf. Toepfe sind 1-basiert.
     static func potColor(_ potIndex: Int) -> Color {
         switch potIndex {
-        case 1: Color(red: 0.35, green: 0.36, blue: 0.90)
-        case 2: Color(red: 0.10, green: 0.62, blue: 0.64)
-        case 3: Color(red: 0.90, green: 0.52, blue: 0.16)
-        case 4: Color(red: 0.83, green: 0.28, blue: 0.50)
-        default: .gray
+        case 1: Brand.cyan
+        case 2: Brand.magenta
+        case 3: Brand.yellow
+        case 4: Brand.green
+        default: Brand.textTertiary
         }
     }
 
     static func potGradient(_ potIndex: Int) -> LinearGradient {
         let base = potColor(potIndex)
         return LinearGradient(
-            colors: [base.opacity(0.95), base.opacity(0.65)],
+            colors: [base, base.opacity(0.55)],
             startPoint: .topLeading,
             endPoint: .bottomTrailing
         )
     }
 
-    /// Flaechiger Hintergrund fuer Karten in Topf-Farbe.
+    /// Dunkle Karte mit einem Hauch Topf-Farbe. Bewusst zurueckhaltend -
+    /// das Neon soll auf Linien und Schrift liegen, nicht auf Flaechen.
     static func potSurface(_ potIndex: Int, emphasis: Double = 0.12) -> LinearGradient {
         let base = potColor(potIndex)
         return LinearGradient(
-            colors: [base.opacity(emphasis + 0.05), base.opacity(emphasis * 0.5)],
+            colors: [base.opacity(emphasis), base.opacity(emphasis * 0.35)],
             startPoint: .topLeading,
             endPoint: .bottomTrailing
         )
@@ -115,6 +133,8 @@ struct PressableButtonStyle: ButtonStyle {
     }
 }
 
+// MARK: - Bausteine
+
 extension View {
 
     /// Eintritt niemals aus dem Nichts: nichts in der echten Welt erscheint aus
@@ -128,5 +148,31 @@ extension View {
                     removal: .opacity
                 )
         )
+    }
+
+    /// Dunkle Karte mit feiner Kontur - der Grundbaustein der Oberflaeche.
+    func brandCard(
+        cornerRadius: CGFloat = Tokens.Radius.card,
+        tint: Color? = nil,
+        strokeOpacity: Double = 1
+    ) -> some View {
+        background {
+            RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+                .fill(Tokens.Brand.surface)
+        }
+        .overlay {
+            RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+                .strokeBorder(
+                    (tint ?? Tokens.Brand.hairline).opacity(tint == nil ? 1 : 0.45 * strokeOpacity),
+                    lineWidth: 1
+                )
+        }
+    }
+
+    /// Setzt den Marken-Hintergrund und blendet die Standardflaechen von
+    /// Form und List aus, damit keine hellgrauen Systemscreens durchscheinen.
+    func brandScreenBackground() -> some View {
+        scrollContentBackground(.hidden)
+            .background { DrawBackground() }
     }
 }

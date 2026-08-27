@@ -40,16 +40,19 @@ struct PotSectionView: View {
             HStack(spacing: Tokens.Spacing.small) {
                 Capsule()
                     .fill(Tokens.potGradient(pot.id))
-                    .frame(width: 16, height: 5)
+                    .frame(width: 18, height: 5)
 
-                Text("Topf \(pot.id)")
+                Text("TOPF \(pot.id)")
+                    .font(.system(size: 11, weight: .bold))
+                    .tracking(1.2)
+                    .foregroundStyle(Tokens.potColor(pot.id))
 
                 Spacer()
 
                 Text("\(pot.teams.count)")
-                    .monospacedDigit()
+                    .font(.footnote.monospacedDigit())
                     .contentTransition(.numericText())
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Tokens.Brand.textSecondary)
             }
         } footer: {
             let issues = viewModel.issues(forPot: pot.id)
@@ -62,5 +65,6 @@ struct PotSectionView: View {
                 .font(.caption)
             }
         }
+        .listRowBackground(Tokens.Brand.surface)
     }
 }

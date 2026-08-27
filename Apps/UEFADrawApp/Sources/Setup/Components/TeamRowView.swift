@@ -11,7 +11,10 @@ struct TeamRowView: View {
 
     var body: some View {
         HStack(spacing: Tokens.Spacing.small) {
+            TeamLogoView(team: team, size: 26)
+
             TextField("Teamname", text: $team.name)
+                .foregroundStyle(.white)
                 .autocorrectionDisabled()
                 #if os(iOS)
                 .textInputAutocapitalization(.words)
@@ -33,7 +36,7 @@ struct TeamRowView: View {
                     }
                 } label: {
                     Image(systemName: "arrow.up.arrow.down.circle")
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Tokens.Brand.textSecondary)
                 }
                 .accessibilityLabel("Team in anderen Topf verschieben")
             }

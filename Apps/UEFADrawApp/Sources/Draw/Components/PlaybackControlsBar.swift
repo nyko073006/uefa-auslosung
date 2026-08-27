@@ -40,15 +40,18 @@ struct PlaybackControlsBar: View {
         }
         .padding(.horizontal, Tokens.Spacing.medium)
         .padding(.vertical, Tokens.Spacing.medium)
-        .background(.bar)
+        .background(.ultraThinMaterial)
+        .overlay(alignment: .top) {
+            Rectangle().fill(Tokens.Brand.hairline).frame(height: 1)
+        }
     }
 
     private var progressTrack: some View {
         GeometryReader { proxy in
             ZStack(alignment: .leading) {
-                Capsule().fill(.quaternary)
+                Capsule().fill(Tokens.Brand.hairline)
                 Capsule()
-                    .fill(.tint)
+                    .fill(Tokens.Brand.cyan)
                     .frame(width: max(0, proxy.size.width * progress))
             }
         }

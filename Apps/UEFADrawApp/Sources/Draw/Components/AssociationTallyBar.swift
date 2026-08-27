@@ -31,19 +31,20 @@ struct AssociationTallyBar: View {
         HStack(spacing: Tokens.Spacing.tight) {
             Text(entry.association.id)
                 .font(.caption2.weight(.bold))
+                .foregroundStyle(.white)
 
             Text("\(entry.count)")
                 .font(.caption2.monospacedDigit())
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Tokens.Brand.textSecondary)
                 .contentTransition(.numericText())
         }
         .padding(.horizontal, Tokens.Spacing.small)
         .padding(.vertical, 5)
         .background {
-            Capsule().fill(.quaternary.opacity(0.6))
+            Capsule().fill(Tokens.Brand.surface)
         }
         .overlay {
-            Capsule().strokeBorder(.quaternary, lineWidth: 0.5)
+            Capsule().strokeBorder(Tokens.Brand.hairline, lineWidth: 1)
         }
         .accessibilityElement(children: .combine)
         .accessibilityLabel("\(entry.association.name): \(entry.count) Gegner")

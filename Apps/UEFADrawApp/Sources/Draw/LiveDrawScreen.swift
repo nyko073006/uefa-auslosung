@@ -16,6 +16,8 @@ struct LiveDrawScreen: View {
 
     var body: some View {
         content
+            // Das Linienmuster nimmt die Farbe des offenen Topfs auf.
+            .background { DrawBackground(accent: Tokens.potColor(viewModel.openPot ?? 1)) }
             .navigationTitle("Auslosung läuft")
             #if os(iOS)
             .navigationBarTitleDisplayMode(.inline)
@@ -42,28 +44,27 @@ struct LiveDrawScreen: View {
         VStack(spacing: Tokens.Spacing.large) {
             ZStack {
                 Circle()
-                    .fill(
-                        LinearGradient(
-                            colors: [Tokens.potColor(1), Tokens.potColor(4)],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        )
-                    )
-                    .frame(width: 96, height: 96)
-                    .shadow(color: Tokens.potColor(1).opacity(0.3), radius: 16, y: 8)
+                    .strokeBorder(Tokens.Brand.cyan.opacity(0.75), lineWidth: 2)
+                    .frame(width: 108, height: 108)
+                    .shadow(color: Tokens.Brand.cyan.opacity(0.5), radius: 22)
+
+                Circle()
+                    .strokeBorder(Tokens.Brand.cyan.opacity(0.2), lineWidth: 1)
+                    .frame(width: 132, height: 132)
 
                 Image(systemName: "circle.hexagongrid.fill")
-                    .font(.system(size: 40))
-                    .foregroundStyle(.white)
+                    .font(.system(size: 38))
+                    .foregroundStyle(Tokens.Brand.cyan)
                     .symbolEffect(.pulse, options: reduceMotion ? .nonRepeating : .repeating)
             }
 
             VStack(spacing: Tokens.Spacing.tight) {
                 Text("Die Trommel dreht sich")
                     .font(.title3.weight(.semibold))
+                    .foregroundStyle(.white)
                 Text("Die Engine ermittelt eine gültige Auslosung.")
                     .font(.footnote)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Tokens.Brand.textSecondary)
                     .multilineTextAlignment(.center)
             }
         }
@@ -72,16 +73,29 @@ struct LiveDrawScreen: View {
     }
 
     private func failureView(_ message: String) -> some View {
-        ContentUnavailableView {
-            Label("Auslosung fehlgeschlagen", systemImage: "exclamationmark.triangle")
-        } description: {
-            Text(message)
-        } actions: {
+        VStack(spacing: Tokens.Spacing.large) {
+            Image(systemName: "exclamationmark.triangle.fill")
+                .font(.system(size: 44))
+                .foregroundStyle(Tokens.Brand.yellow)
+
+            VStack(spacing: Tokens.Spacing.small) {
+                Text("Auslosung fehlgeschlagen")
+                    .font(.title3.weight(.semibold))
+                    .foregroundStyle(.white)
+                Text(message)
+                    .font(.footnote)
+                    .foregroundStyle(Tokens.Brand.textSecondary)
+                    .multilineTextAlignment(.center)
+            }
+
             Button("Erneut versuchen") {
                 Task { await viewModel.retry() }
             }
             .buttonStyle(.borderedProminent)
+            .buttonBorderShape(.roundedRectangle(radius: Tokens.Radius.chip))
         }
+        .padding(Tokens.Spacing.large)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
     private var revealView: some View {
@@ -108,9 +122,10 @@ struct LiveDrawScreen: View {
 
                 if !viewModel.associationTally.isEmpty {
                     VStack(alignment: .leading, spacing: Tokens.Spacing.small) {
-                        Text("Gegner nach Verband")
-                            .font(.caption.weight(.semibold))
-                            .foregroundStyle(.secondary)
+                        Text("GEGNER NACH VERBAND")
+                            .font(.system(size: 10, weight: .bold))
+                            .tracking(1.1)
+                            .foregroundStyle(Tokens.Brand.textTertiary)
                         AssociationTallyBar(tally: viewModel.associationTally)
                     }
                 }
@@ -153,12 +168,12 @@ struct LiveDrawScreen: View {
     private var footer: some View {
         HStack(spacing: Tokens.Spacing.small) {
             Image(systemName: "checkmark.circle.fill")
-                .foregroundStyle(.green)
+                .foregroundStyle(Tokens.Brand.green)
             Text("\(viewModel.completedTeamCount) von \(viewModel.totalTeamCount) Teams ausgelost")
                 .contentTransition(.numericText())
         }
         .font(.footnote)
-        .foregroundStyle(.secondary)
+        .foregroundStyle(Tokens.Brand.textSecondary)
         .frame(maxWidth: .infinity, alignment: .center)
         .padding(.top, Tokens.Spacing.small)
         .animation(
@@ -176,4 +191,5 @@ struct LiveDrawScreen: View {
     return NavigationStack {
         LiveDrawScreen(viewModel: model.makeLiveDrawViewModel(setup: setup, seed: 2026))
     }
+    .preferredColorScheme(.dark)
 }

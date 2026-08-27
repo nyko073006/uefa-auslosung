@@ -39,13 +39,12 @@ struct TeamScheduleCard: View {
 
     private var header: some View {
         HStack(spacing: Tokens.Spacing.medium) {
-            RoundedRectangle(cornerRadius: 2.5, style: .continuous)
-                .fill(Tokens.potGradient(schedule.team.potIndex))
-                .frame(width: 5, height: 34)
+            TeamLogoView(team: schedule.team, size: 30)
 
             VStack(alignment: .leading, spacing: 2) {
                 Text(schedule.team.name)
                     .font(.subheadline.weight(.semibold))
+                    .foregroundStyle(.white)
                     .lineLimit(1)
 
                 HStack(spacing: Tokens.Spacing.tight) {
@@ -54,7 +53,7 @@ struct TeamScheduleCard: View {
                     Text(schedule.team.association.name)
                 }
                 .font(.caption2)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Tokens.Brand.textSecondary)
             }
 
             Spacer(minLength: 0)
@@ -74,10 +73,10 @@ struct TeamScheduleCard: View {
             Text("\(count)")
                 .font(.caption2.monospacedDigit().weight(.medium))
         }
-        .foregroundStyle(.secondary)
+        .foregroundStyle(Tokens.Brand.textSecondary)
         .padding(.horizontal, 6)
         .padding(.vertical, 3)
-        .background(Capsule().fill(.quaternary.opacity(0.5)))
+        .background(Capsule().fill(Tokens.Brand.surface))
         .accessibilityLabel("\(count) \(venue == .home ? "Heimspiele" : "Auswärtsspiele")")
     }
 }

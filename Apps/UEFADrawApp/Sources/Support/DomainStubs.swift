@@ -28,12 +28,22 @@ struct Team: Identifiable, Hashable, Sendable, Codable {
     var name: String
     var association: Association
     var potIndex: Int
+    /// Name des Bildsatzes im Asset-Katalog (Namensraum `TeamLogos`).
+    /// Optional, damit selbst angelegte Teams ohne Wappen auskommen.
+    var logoName: String?
 
-    init(id: UUID = UUID(), name: String, association: Association, potIndex: Int) {
+    init(
+        id: UUID = UUID(),
+        name: String,
+        association: Association,
+        potIndex: Int,
+        logoName: String? = nil
+    ) {
         self.id = id
         self.name = name
         self.association = association
         self.potIndex = potIndex
+        self.logoName = logoName
     }
 }
 

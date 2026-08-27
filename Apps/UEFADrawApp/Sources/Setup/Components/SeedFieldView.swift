@@ -16,6 +16,7 @@ struct SeedFieldView: View {
             HStack(spacing: Tokens.Spacing.small) {
                 TextField("Seed", text: $seedText)
                     .font(.body.monospacedDigit())
+                    .foregroundStyle(.white)
                     #if os(iOS)
                     .keyboardType(.numberPad)
                     #endif
@@ -30,7 +31,7 @@ struct SeedFieldView: View {
             if !isValid {
                 Text("Bitte eine ganze Zahl eingeben.")
                     .font(.caption)
-                    .foregroundStyle(.red)
+                    .foregroundStyle(Tokens.Brand.magenta)
             }
         }
     }

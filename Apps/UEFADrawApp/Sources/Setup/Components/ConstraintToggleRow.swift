@@ -18,9 +18,10 @@ struct ConstraintToggleRow: View {
         ) {
             VStack(alignment: .leading, spacing: Tokens.Spacing.tight) {
                 Text(descriptor.title)
+                    .foregroundStyle(.white)
                 Text(descriptor.explanation)
                     .font(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Tokens.Brand.textSecondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
         }

@@ -95,7 +95,41 @@ Umlaute**, weil "Spielplaene" auf dem Bildschirm schlicht falsch aussieht.
 Pruefbar: Nicht-ASCII darf ausschliesslich innerhalb von String-Literalen
 auftreten, nie in einem Kommentar oder Bezeichner.
 
-### 7. Bewegung
+### 7. Optik nach draw-style.md
+
+`Resources/Design/draw-style.md` gibt die Richtung vor: tiefes UEFA-Blau,
+Neon-Akzente, runde Formen, hoher Kontrast, "keine flachen Standard-Layouts".
+Umgesetzt in `Tokens` und `DrawBackground`:
+
+- **Festgelegt auf Dunkel.** `preferredColorScheme(.dark)` in `UEFADrawApp`.
+  Die Farben sind gesetzt und folgen nicht dem Systemschema - der Entwurf
+  verlangt ausdruecklich keine hellgrauen Systemscreens.
+- **Vier Neonfarben, vier Toepfe**: Cyan, Magenta, Gelb, Gruen. Die Zuordnung
+  steckt in `Tokens.potColor(_:)`, sonst nirgends.
+- **Linienmuster**: `DrawBackground` zeichnet konzentrische Boegen um einen
+  Punkt oberhalb des Bildschirms und nimmt die Farbe des offenen Topfs auf.
+  Bewusst statisch - eine Animation im Dauerhintergrund waere Ablenkung.
+- **Flaechen zurueckhaltend, Linien hell**: Karten sind `Brand.surface`
+  (Weiss bei 6,5 %) mit farbiger Kontur. Das Neon liegt auf Konturen, Schrift
+  und Abzeichen, nicht auf grossen Flaechen.
+- **Systemflaechen ausblenden**: `brandScreenBackground()` setzt
+  `scrollContentBackground(.hidden)`; Form- und List-Zeilen bekommen
+  `listRowBackground(Tokens.Brand.surface)`.
+
+### 8. Vereinswappen
+
+Die 36 Wappen aus `Resources/Design/teams/` liegen im Asset-Katalog unter dem
+Namensraum `TeamLogos`. `TeamLogoView` zeichnet sie und faellt auf das
+Verbandskuerzel zurueck, wenn kein Wappen hinterlegt ist.
+
+Die Bilder sind aus einer Montage geschnitten und nur rund 71 px hoch. Sie
+sind deshalb als **3x** deklariert und tragen bis etwa 28 pt sauber - in der
+Loskugel bewusst nur 54 pt, darueber wuerden sie weich.
+
+`Team.logoName` ist optional: selbst angelegte Teams im Setup kommen ohne
+Wappen aus.
+
+### 9. Bewegung
 
 Regeln, die im Code als `Tokens.Motion` festgehalten sind:
 
