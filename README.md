@@ -17,6 +17,7 @@ Die spaetere App soll:
 - Zielarchitektur fuer die App
 - Umsetzungsroadmap
 - Arbeitsregeln fuer spaetere Beitraege
+- konkrete Projektstruktur fuer die Umsetzung
 
 ## Bewusste Grenzen
 
@@ -33,12 +34,17 @@ Die spaetere App soll:
 
 ## Repo-Struktur
 
+- `Package.swift` - SwiftPM-Einstieg fuer DrawEngine und Tests
+- `Packages/DrawEngine/` - fachliche Kernlogik
+- `Apps/UEFADrawApp/` - spaetere SwiftUI-App
+- `Tests/DrawEngineTests/` - Tests fuer die Auslosungslogik
 - `AGENTS.md` - Arbeitsregeln fuer KI-gestuetzte Aenderungen
 - `docs/vision.md` - Produktziel und Nutzererlebnis
 - `docs/architecture.md` - technische Zielarchitektur
 - `docs/roadmap.md` - Phasen und Reihenfolge der Umsetzung
+- `docs/rules.md` - erste fachliche Regelbasis
+- `docs/example-data.md` - Beispielteams und Seed
 
 ## Naechster sinnvoller Schritt
 
 Den SwiftUI-App-Startpunkt anlegen und die Auslosungsregeln als explizite Fachlogik modellieren.
-
