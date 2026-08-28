@@ -72,6 +72,9 @@ struct PlaybackControlsBar: View {
         }
         .buttonStyle(.borderedProminent)
         .buttonBorderShape(.roundedRectangle(radius: Tokens.Radius.chip))
+        // Im Schritt-Modus gibt es keine automatische Wiedergabe - die Taste
+        // waere sonst sichtbar, aber wirkungslos.
+        .disabled(speed == .manual)
         .accessibilityLabel(isPaused ? "Fortsetzen" : "Pausieren")
     }
 

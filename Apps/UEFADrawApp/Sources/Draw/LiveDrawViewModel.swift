@@ -31,6 +31,10 @@ final class LiveDrawViewModel {
     private(set) var run: DrawRun?
 
     private let teamsByID: [Team.ID: Team]
+    /// Schranke gegen den Doppelstart. `phase` allein genuegt nicht: sie wechselt
+    /// erst nach `await port.run(...)`, ein zweiter Eintritt waehrend des Laufs
+    /// kaeme also durch und wuerde die Engine erneut starten.
+    private var isLoading = false
 
     init(setup: DrawSetup, seed: UInt64, port: any DrawEnginePort, router: AppRouter) {
         self.setup = setup
@@ -43,10 +47,13 @@ final class LiveDrawViewModel {
     // MARK: - Lebenszyklus
 
     func load() async {
-        guard case .preparing = phase else { return }
+        guard !isLoading, case .preparing = phase else { return }
+        isLoading = true
+        defer { isLoading = false }
 
         do {
             let run = try await port.run(setup: setup, seed: seed)
+            try Task.checkCancellation()
             self.run = run
 
             let controller = PlaybackController(steps: RevealSequencer.steps(for: run))
@@ -56,6 +63,10 @@ final class LiveDrawViewModel {
             self.playback = controller
             phase = .revealing
             controller.start()
+        } catch is CancellationError {
+            // Ein Abbruch ist kein Fehler: er entsteht, wenn der Nutzer den
+            // Screen verlaesst. Ein Fehlerdialog waere hier schlicht falsch.
+            phase = .preparing
         } catch {
             phase = .failed(error.localizedDescription)
         }
@@ -160,6 +171,12 @@ final class LiveDrawViewModel {
     // MARK: - Aktionen
 
     func retry() async {
+        // Die alte Wiedergabe zuerst stoppen. Sonst laeuft sie weiter, ist ueber
+        // das ViewModel nicht mehr erreichbar und wuerde am Ende erneut
+        // `router.replaceTop` ausloesen.
+        playback?.stop()
+        playback = nil
+        run = nil
         phase = .preparing
         await load()
     }

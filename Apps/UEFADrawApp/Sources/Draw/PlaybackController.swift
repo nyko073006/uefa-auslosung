@@ -6,6 +6,14 @@
 // Pause ist ein angehaltener Cursor, Tempo ist eine Wartezeit, Replay ist Cursor
 // auf 0. Bei gleichem Seed liefert die Engine dieselbe Sequenz - die Wiederholung
 // ist damit garantiert identisch.
+//
+// Zwei Regeln halten die Zustaende widerspruchsfrei:
+//
+// 1. Tempo und Pause sind orthogonal. Eine Tempoauswahl setzt eine vom Nutzer
+//    gesetzte Pause nicht auf. Einzige Ausnahme ist das Verlassen des
+//    Schritt-Modus, dessen Pause zum Modus gehoert und nicht vom Nutzer kam.
+// 2. Im Schritt-Modus gibt es keine automatische Wiedergabe. `resume()` ist dort
+//    wirkungslos, sonst liefe die Auslosung mit Zeitfaktor 0 ohne Animation durch.
 
 import Foundation
 import Observation
@@ -59,7 +67,6 @@ final class PlaybackController {
 
     private(set) var state = RevealState()
     private(set) var isPaused = false
-    private(set) var isRunning = false
     private(set) var speed: Speed = .normal
 
     /// Wird einmal aufgerufen, sobald die Sequenz durchgelaufen ist.
@@ -69,6 +76,9 @@ final class PlaybackController {
     private var task: Task<Void, Never>?
     private var pauseGate: CheckedContinuation<Void, Never>?
     private var didReportCompletion = false
+    /// Merkt, dass die Pause vom Schritt-Modus stammt und nicht vom Nutzer.
+    /// Nur eine solche Pause darf beim Verlassen des Modus automatisch enden.
+    private var pausedByModeSwitch = false
 
     init(steps: [RevealStep]) {
         self.steps = steps
@@ -78,6 +88,15 @@ final class PlaybackController {
     // Concurrency nicht erlaubt. Das ViewModel ruft `stop()` in `onDisappear`.
 
     // MARK: - Abgeleitete Anzeigewerte
+
+    /// Laeuft die Wiedergabe gerade tatsaechlich weiter?
+    ///
+    /// Bewusst abgeleitet statt gespeichert: ein zweites Bool neben `isPaused`,
+    /// `task` und `cursor` liesse Kombinationen zu, die es fachlich nicht gibt
+    /// (etwa "laeuft" und "pausiert" gleichzeitig).
+    var isRunning: Bool {
+        task != nil && !isPaused && !isFinished
+    }
 
     var progress: Double {
         steps.isEmpty ? 0 : Double(cursor) / Double(steps.count)
@@ -91,26 +110,35 @@ final class PlaybackController {
         cursor >= steps.count
     }
 
+    /// Im Schritt-Modus gibt es nichts zum Abspielen - die Leiste blendet die
+    /// Wiedergabetaste entsprechend aus.
+    var canTogglePlayback: Bool {
+        speed != .manual && !isFinished
+    }
+
     // MARK: - Steuerung
 
     func start() {
-        guard task == nil, !isFinished else { return }
-        isRunning = true
+        guard task == nil, !isFinished, speed != .manual else { return }
         task = Task { [weak self] in
             await self?.runLoop()
         }
     }
 
     func pause() {
-        guard !isPaused else { return }
+        guard !isPaused, !isFinished else { return }
         isPaused = true
     }
 
     func resume() {
         guard isPaused else { return }
+        // Der Schritt-Modus kennt keine automatische Wiedergabe.
+        guard speed != .manual else { return }
+
         isPaused = false
+        pausedByModeSwitch = false
         releaseGate()
-        if task == nil && !isFinished {
+        if task == nil, !isFinished {
             start()
         }
     }
@@ -120,12 +148,23 @@ final class PlaybackController {
     }
 
     func setSpeed(_ newSpeed: Speed) {
+        guard newSpeed != speed else { return }
+
+        let wasManual = (speed == .manual)
         speed = newSpeed
+
         if newSpeed == .manual {
+            // Die Pause gehoert zum Modus - nur dann darf sie spaeter von
+            // selbst enden. Eine bereits bestehende Nutzerpause bleibt seine.
+            pausedByModeSwitch = !isPaused
+            stop()
             pause()
-        } else {
+        } else if wasManual, pausedByModeSwitch {
+            pausedByModeSwitch = false
             resume()
         }
+        // Sonst bewusst nichts: eine reine Tempoauswahl darf einen pausierten
+        // Lauf nicht fortsetzen.
     }
 
     /// Ein Schritt weiter - fuer den manuellen Modus.
@@ -140,8 +179,11 @@ final class PlaybackController {
         cursor = 0
         state = RevealState()
         didReportCompletion = false
-        isPaused = (speed == .manual)
-        if !isPaused {
+
+        let manual = (speed == .manual)
+        isPaused = manual
+        pausedByModeSwitch = manual
+        if !manual {
             start()
         }
     }
@@ -158,7 +200,6 @@ final class PlaybackController {
         task?.cancel()
         task = nil
         releaseGate()
-        isRunning = false
     }
 
     // MARK: - Ablauf
@@ -179,7 +220,6 @@ final class PlaybackController {
             if Task.isCancelled { break }
         }
 
-        isRunning = false
         if !Task.isCancelled {
             task = nil
             reportCompletionIfNeeded()
@@ -192,9 +232,14 @@ final class PlaybackController {
         cursor += 1
     }
 
+    /// Am Ende gibt es weder Pause noch offenen Modus-Zustand: eine fertige
+    /// Auslosung darf in der Leiste kein "Fortsetzen" mehr anbieten.
     private func reportCompletionIfNeeded() {
         guard isFinished, !didReportCompletion else { return }
         didReportCompletion = true
+        isPaused = false
+        pausedByModeSwitch = false
+        releaseGate()
         onCompleted?()
     }
 
