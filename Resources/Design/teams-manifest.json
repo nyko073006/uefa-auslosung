@@ -1,0 +1,224 @@
+{
+  "source": "UEFA Champions League league phase team badge montage",
+  "source_url": "https://www.uefa.com/uefachampionsleague/news/02a8-2171a88881a0-c70193b972c6-1000--meet-the-2026-27-champions-league-league-phase-teams/",
+  "generated_from": "Resources/Design/uefa-2026-27-team-badges.webp",
+  "ordering": "row-major visual order from the UEFA montage",
+  "teams": [
+    {
+      "name": "AEK Athens",
+      "slug": "aek-athens",
+      "file": "teams/aek-athens.png",
+      "position": 1
+    },
+    {
+      "name": "Arsenal",
+      "slug": "arsenal",
+      "file": "teams/arsenal.png",
+      "position": 2
+    },
+    {
+      "name": "Aston Villa",
+      "slug": "aston-villa",
+      "file": "teams/aston-villa.png",
+      "position": 3
+    },
+    {
+      "name": "Atletico Madrid",
+      "slug": "atletico-madrid",
+      "file": "teams/atletico-madrid.png",
+      "position": 4
+    },
+    {
+      "name": "Borussia Dortmund",
+      "slug": "borussia-dortmund",
+      "file": "teams/borussia-dortmund.png",
+      "position": 5
+    },
+    {
+      "name": "Barcelona",
+      "slug": "barcelona",
+      "file": "teams/barcelona.png",
+      "position": 6
+    },
+    {
+      "name": "Bayern Munich",
+      "slug": "bayern-munich",
+      "file": "teams/bayern-munich.png",
+      "position": 7
+    },
+    {
+      "name": "Bodo/Glimt",
+      "slug": "bodo-glimt",
+      "file": "teams/bodo-glimt.png",
+      "position": 8
+    },
+    {
+      "name": "Club Brugge",
+      "slug": "club-brugge",
+      "file": "teams/club-brugge.png",
+      "position": 9
+    },
+    {
+      "name": "Como",
+      "slug": "como",
+      "file": "teams/como.png",
+      "position": 10
+    },
+    {
+      "name": "Fenerbahce",
+      "slug": "fenerbahce",
+      "file": "teams/fenerbahce.png",
+      "position": 11
+    },
+    {
+      "name": "Feyenoord",
+      "slug": "feyenoord",
+      "file": "teams/feyenoord.png",
+      "position": 12
+    },
+    {
+      "name": "Galatasaray",
+      "slug": "galatasaray",
+      "file": "teams/galatasaray.png",
+      "position": 13
+    },
+    {
+      "name": "Inter",
+      "slug": "inter",
+      "file": "teams/inter.png",
+      "position": 14
+    },
+    {
+      "name": "LASK",
+      "slug": "lask",
+      "file": "teams/lask.png",
+      "position": 15
+    },
+    {
+      "name": "RB Leipzig",
+      "slug": "rb-leipzig",
+      "file": "teams/rb-leipzig.png",
+      "position": 16
+    },
+    {
+      "name": "RC Lens",
+      "slug": "rc-lens",
+      "file": "teams/rc-lens.png",
+      "position": 17
+    },
+    {
+      "name": "Lille",
+      "slug": "lille",
+      "file": "teams/lille.png",
+      "position": 18
+    },
+    {
+      "name": "Liverpool",
+      "slug": "liverpool",
+      "file": "teams/liverpool.png",
+      "position": 19
+    },
+    {
+      "name": "Manchester City",
+      "slug": "manchester-city",
+      "file": "teams/manchester-city.png",
+      "position": 20
+    },
+    {
+      "name": "Manchester United",
+      "slug": "manchester-united",
+      "file": "teams/manchester-united.png",
+      "position": 21
+    },
+    {
+      "name": "Napoli",
+      "slug": "napoli",
+      "file": "teams/napoli.png",
+      "position": 22
+    },
+    {
+      "name": "Paris Saint-Germain",
+      "slug": "paris-saint-germain",
+      "file": "teams/paris-saint-germain.png",
+      "position": 23
+    },
+    {
+      "name": "Porto",
+      "slug": "porto",
+      "file": "teams/porto.png",
+      "position": 24
+    },
+    {
+      "name": "PSV Eindhoven",
+      "slug": "psv-eindhoven",
+      "file": "teams/psv-eindhoven.png",
+      "position": 25
+    },
+    {
+      "name": "Real Betis",
+      "slug": "real-betis",
+      "file": "teams/real-betis.png",
+      "position": 26
+    },
+    {
+      "name": "Real Madrid",
+      "slug": "real-madrid",
+      "file": "teams/real-madrid.png",
+      "position": 27
+    },
+    {
+      "name": "AS Roma",
+      "slug": "as-roma",
+      "file": "teams/as-roma.png",
+      "position": 28
+    },
+    {
+      "name": "Slovan Bratislava",
+      "slug": "slovan-bratislava",
+      "file": "teams/slovan-bratislava.png",
+      "position": 29
+    },
+    {
+      "name": "Sabah",
+      "slug": "sabah",
+      "file": "teams/sabah.png",
+      "position": 30
+    },
+    {
+      "name": "Shakhtar Donetsk",
+      "slug": "shakhtar-donetsk",
+      "file": "teams/shakhtar-donetsk.png",
+      "position": 31
+    },
+    {
+      "name": "Slavia Praha",
+      "slug": "slavia-praha",
+      "file": "teams/slavia-praha.png",
+      "position": 32
+    },
+    {
+      "name": "Sporting CP",
+      "slug": "sporting-cp",
+      "file": "teams/sporting-cp.png",
+      "position": 33
+    },
+    {
+      "name": "VfB Stuttgart",
+      "slug": "vfb-stuttgart",
+      "file": "teams/vfb-stuttgart.png",
+      "position": 34
+    },
+    {
+      "name": "Viking FK",
+      "slug": "viking-fk",
+      "file": "teams/viking-fk.png",
+      "position": 35
+    },
+    {
+      "name": "Villarreal",
+      "slug": "villarreal",
+      "file": "teams/villarreal.png",
+      "position": 36
+    }
+  ]
+}
