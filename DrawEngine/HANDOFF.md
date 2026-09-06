@@ -1,8 +1,11 @@
 # DrawEngine (UEFA-Auslosung) - Session-Handoff
 
-_Stand: 2026-09-06. Diese Session hat die komplette Auslosungs-Engine als eigenstaendiges
-Swift-Package gebaut, adversarial pruefen lassen, einen dabei gefundenen Blocker behoben,
-das Ergebnis unabhaengig verifiziert, committet und gepusht._
+_Stand: 2026-09-06, nach dem Merge. Die Bau-Session hat die komplette Auslosungs-Engine als
+eigenstaendiges Swift-Package gebaut, adversarial pruefen lassen, einen dabei gefundenen
+Blocker behoben und das Ergebnis unabhaengig verifiziert. Eine Folge-Session hat den Stand
+nachgemessen, PR #1 nach `main` gemergt und dabei festgestellt, dass parallel die komplette
+SwiftUI-App entstanden ist. **Engine und App liegen jetzt nebeneinander auf `main`, aber sie
+sind noch nicht verbunden** - siehe Abschnitt 5 und 5a._
 
 ## 1. Worum es geht
 
@@ -14,8 +17,9 @@ Tests mit Seed.
 - **Repo:** `https://github.com/nyko073006/uefa-auslosung`
 - **Lokal:** `/Users/nyko/Documents/GitHub/uefa-auslosung`
 - **Package:** `/Users/nyko/Documents/GitHub/uefa-auslosung/DrawEngine`
-- **Branch:** `feature/draw-engine` (gepusht, trackt `origin/feature/draw-engine`)
-- **Commit:** `c1aaba5` - 28 Dateien, 7.074 Zeilen
+- **Branch:** `main`. `feature/draw-engine` ist ueber PR #1 gemergt und bleibt als
+  Arbeitsbranch fuer Engine-Aenderungen bestehen.
+- **Commits:** `c1aaba5` (Engine, 28 Dateien, 7.074 Zeilen), gemergt als `b5e5967`
 - **Stack:** Swift 6.3.1, swift-tools-version 6.0, Swift-6-Language-Mode,
   Test-Framework **Swift Testing** (kein XCTest), keine Dependencies, kein Foundation-Import
 
@@ -94,21 +98,65 @@ result.events    // Reveal-Sequenz fuer die schrittweise Darstellung
 
 ## 5. Wo wir stehen
 
-Alles committet und gepusht, Arbeitskopie sauber.
+> **Dieser Abschnitt ist am 2026-09-06 komplett neu geschrieben worden.** Der urspruengliche
+> Text sagte "kein Pull Request geoeffnet" und "der App-Agent hat nichts im Repo abgelegt".
+> Beides war zu dem Zeitpunkt schon falsch. Die Ursache ist lehrreich und steht als
+> Fallstrick (h) in Abschnitt 6: der Stand war aus einem **veralteten `origin/main`**
+> abgelesen, ohne vorher zu fetchen.
 
-> **Berichtigung 2026-09-06, nachgemessen:** Hier stand urspruenglich "Kein Pull Request
-> geoeffnet". Das ist falsch. **PR #1 ist offen seit 2026-08-28**
-> (`https://github.com/nyko073006/uefa-auslosung/pull/1`), `feature/draw-engine` → `main`,
-> Zustand `MERGEABLE` / `CLEAN`, **kein Review, kein Kommentar, keine CI-Pruefung**
-> (das Repo hat keine Actions). Offen ist also nicht das Oeffnen, sondern der **Merge** -
-> und der bleibt beim Menschen.
+**PR #1 ist gemergt** (2026-09-06, Merge-Commit `b5e5967`). `main` traegt jetzt Engine und App.
 
-Der App-Agent hat weiterhin **nichts im Repo abgelegt**: `main` steht unveraendert auf dem
-initialen Commit `9073356`, es gibt keinen App-Ordner und keinen weiteren Branch
-(nachgeprueft 2026-09-06).
+**Der App-Agent war die ganze Zeit produktiv.** Auf `main` liegen neun Commits nach dem
+initialen: die vollstaendige SwiftUI-Shell (Phase 3 der Roadmap) mit Setup-, Live- und
+Ergebnis-Screens, Playback-Controller, Design-Tokens nach `draw-style.md`, App-Icon und den
+Wappen aller 36 Teams unter `Apps/UEFADrawApp/`.
 
-**Nachmessung 2026-09-06:** `swift build` sauber, `swift test` **121 Tests gruen in 23,8 s**,
-`git status` bis auf diese Datei sauber. Die Zahlen aus Abschnitt 2 tragen weiterhin.
+**Wichtig: Es gibt seit dem Merge zwei Dinge namens DrawEngine.**
+
+| Pfad | Was es ist |
+|---|---|
+| `DrawEngine/` | Das **echte** Package aus diesem Handoff. swift-tools 6.0, Swift Testing, 121 Tests. |
+| `Packages/DrawEngine/` | Ein **8-Zeilen-Platzhalter** (`isReady: Bool`) aus dem App-Geruest. Die Wurzel-`Package.swift` (swift-tools 5.10, XCTest) zeigt hierauf. |
+
+**Die App laeuft heute nicht auf der echten Engine**, sondern auf `MockDrawEngine`
+(231 Zeilen) hinter dem Protokoll `DrawEnginePort`. Beides steht in
+`Apps/UEFADrawApp/Sources/Support/`.
+
+Der App-Agent hat dabei sauber gearbeitet: Er hat **keine Regel nachgebaut**, sondern eine
+Naht gezogen und sie beschriftet. `DrawEnginePort.swift` traegt den Hinweis "BEIM MERGE mit
+feature/draw-engine: eine Adapter-Implementierung anlegen", `DomainStubs.swift` den Hinweis
+"BEIM MERGE: diese Datei ersatzlos loeschen".
+
+**Nachmessung auf `main` am 2026-09-06:** Beide Packages bauen und testen nebeneinander
+ohne Stoerung. Wurzel-Package `swift build` sauber, 1 Stub-Test gruen. `DrawEngine/`
+121 Tests gruen in 22,4 s. Die Zahlen aus Abschnitt 2 tragen weiterhin.
+
+### 5a. Was die Zusammenfuehrung konkret verlangt
+
+Der Adapter ist **nicht** nur Umbenennen. Vier Punkte, absteigend nach Aufwand:
+
+1. **Ablehnungen.** `DrawEnginePort.run(setup:seed:)` gibt einen `DrawRun` mit
+   `trace: [DrawTraceEntry]` zurueck, und `DrawTraceEntry.Outcome` kennt
+   `.rejected(reason: String)`. **Die Engine liefert das nicht.** Sie findet eine
+   vollstaendige Loesung; verworfene Kandidaten verlassen die Suche nie. Entweder die Engine
+   bekommt Ablehnungs-Ereignisse, oder die Oberflaeche leitet die Begruendung selbst aus den
+   Fachregeln ab. **Das ist eine Produktentscheidung und noch nicht getroffen** (steht als
+   offene Frage in `docs/roadmap.md`). Ohne sie ist der Port nur teilweise bedienbar.
+2. **Doppelte Typnamen.** `Team`, `Pot`, `Association`, `Matchup` und `Venue` gibt es in
+   `DomainStubs.swift` **und** in `DrawEngine/Sources/DrawEngine/Models/`. Die Stubs nutzen
+   `UUID` als `Team.ID`, die Engine einen eigenen `TeamID`. Die Stub-Datei faellt weg, die
+   App importiert die Engine-Modelle, und die Views ziehen nach.
+3. **Regeln als Daten.** Der Port verlangt `availableConstraints() -> [ConstraintDescriptor]`
+   und `validate(_:) -> [SetupIssue]`. Die Engine hat dafuer keine oeffentliche
+   Entsprechung. Bausteine sind da (`InputValidation`, `DrawError`, `InfeasibilityReason`),
+   sie muessen nur nach aussen gereicht werden. Die sechs Regeltexte stehen in
+   `Docs/draw-regeln.md` Abschnitt 1 und gehoeren in die Engine, nicht in die UI.
+4. **Package-Umbau.** Die Wurzel-`Package.swift` muss auf das echte Package zeigen, der
+   Platzhalter unter `Packages/DrawEngine/` verschwinden. Dabei von swift-tools 5.10 auf 6.0
+   und von XCTest auf Swift Testing ziehen, sonst laufen zwei Testwelten nebeneinander.
+
+`MockDrawEngine` danach nicht loeschen: Fuer SwiftUI-Previews ist ein schneller,
+determinierter Mock weiterhin das richtige Werkzeug.
 
 ## 6. Fallstricke - bitte nicht erneut hineinlaufen
 
@@ -158,17 +206,36 @@ heisst "Unloesbarkeit bewiesen, Suchraum erschoepft", Letzteres nur "abgebrochen
 trug diese Zusage nicht (unloesbare Felder liefen meist ins Budget). Jetzt schon. Beim Umbau
 der Suche darauf achten, dass `.exhausted` wirklich nur bei erschoepftem Raum entsteht.
 
+**(h) Bei parallelen Agenten ist der lokale Repo-Stand wertlos ohne `git fetch`.** Am
+2026-09-06 stand `origin/main` lokal noch auf dem initialen Commit `9073356`. Daraus wurde
+geschlossen und dem Nutzer gesagt, `main` sei leer und ein Merge folglich konfliktfrei.
+Tatsaechlich lagen dort neun Commits mit der fertigen App. Erschwerend: `gh pr view` meldete
+noch `MERGEABLE`/`CLEAN`, weil GitHub die Mergebarkeit zwischenspeichert - erst der
+Merge-Versuch selbst schlug fehl. **Bei einem Repo, in dem ein zweiter Agent arbeitet, gilt
+kein Stand als bekannt, der nicht unmittelbar vorher gefetcht wurde**, und
+`mergeable: MERGEABLE` ist kein Beweis, sondern ein Zwischenstand.
+
 ## 7. Naechste Schritte
 
-1. ~~**PR oeffnen**~~ - erledigt, PR #1 ist seit 2026-08-28 offen. Offen ist der **Merge**:
-   `MERGEABLE`/`CLEAN`, ohne Review. Entscheidung liegt beim Menschen, der Zeitpunkt haengt
-   am SwiftUI-Agenten.
-2. **Offene Roadmap-Frage schliessen:** `docs/roadmap.md` im Repo-Root fragt "Welche
-   UEFA-Regelmenge soll exakt simuliert werden?". Die Antwort steht vollstaendig in
-   `DrawEngine/Docs/draw-regeln.md`, aber im Repo-Root weiss davon niemand. Ein Verweis
-   wuerde das aufloesen - **nur nach Freigabe des Nutzers**, siehe Abschnitt 8.
-3. **Auf den SwiftUI-Agenten reagieren:** Vermisst er etwas an der Engine, gehoert die
-   Aenderung auf `feature/draw-engine` - **nicht** als nachgebaute Regel in den App-Layer.
+Die drei Punkte, die hier urspruenglich standen (PR oeffnen, Roadmap-Verweis setzen, auf den
+App-Agenten reagieren), sind **alle erledigt**. Was jetzt ansteht:
+
+1. **Die Ablehnungs-Frage entscheiden.** Alles Weitere haengt daran. Gibt die Engine
+   Ablehnungen mit Begruendung aus, oder leitet die UI sie selbst ab? Solange das offen ist,
+   kann der Adapter den Port nur teilweise bedienen. Siehe Abschnitt 5a Punkt 1.
+2. **Adapter bauen und die zweite DrawEngine entfernen.** Reihenfolge, die den Bruch klein
+   haelt: erst `DomainStubs.swift` durch die Engine-Modelle ersetzen (Punkt 2 in 5a), dann
+   `availableConstraints`/`validate` aus der Engine heraus bedienen (Punkt 3), dann die
+   Wurzel-`Package.swift` umziehen und `Packages/DrawEngine/` loeschen (Punkt 4). Der
+   Zwischenzustand ist nach jedem Schritt lauffaehig, weil die Views nur gegen
+   `DrawEnginePort` arbeiten.
+3. **Nach dem Umzug beide Testwelten zusammenlegen.** Heute laufen `Tests/DrawEngineTests`
+   (XCTest, 1 Stub-Test) und `DrawEngine/Tests/` (Swift Testing, 121 Tests) getrennt. Wer
+   `swift test` in der Wurzel aufruft, sieht die 121 Tests **nicht** - eine Falle fuer jeden,
+   der glaubt, er habe die Engine gepruft.
+4. **Engine-Aenderungen bleiben in `DrawEngine/`.** Vermisst die App etwas, gehoert die
+   Aenderung dorthin, **nicht** als nachgebaute Regel in den App-Layer. Das war die
+   urspruengliche Scope-Regel und gilt nach dem Merge unveraendert.
 
 ## 8. Was ueber den Nutzer wichtig ist
 
@@ -179,9 +246,16 @@ der Suche darauf achten, dass `.exhausted` wirklich nur bei erschoepftem Raum en
   Statusabfragen, keine Kritik. Antwort: konkret, mit Zahlen, ohne Fuellwoerter.
 - **Scope-Grenze, die er ausdruecklich gesetzt hat:** Ein anderer Agent baut parallel die
   SwiftUI-App im selben Repo. Anweisung war woertlich "komm ihm nicht in die Quere". Deshalb
-  wurde **ausschliesslich innerhalb von `DrawEngine/` geschrieben** - `README.md`, `docs/`
-  und `AGENTS.md` im Repo-Root sind unveraendert, und auch `.gitignore` und die Doku liegen
-  bewusst im Package statt im Root. Diese Grenze weiter respektieren.
+  wurde in der Bau-Session **ausschliesslich innerhalb von `DrawEngine/` geschrieben**.
+  **Am 2026-09-06 hat er diese Grenze fuer genau einen Fall gelockert** und den Verweis auf
+  die Regeldoku in `docs/roadmap.md` freigegeben. Das war eine punktuelle Freigabe, keine
+  generelle: `AGENTS.md` und die App unter `Apps/` bleiben fremdes Gebiet. Vor jedem weiteren
+  Eingriff ausserhalb von `DrawEngine/` erneut fragen.
+- **Er entscheidet auf Basis dessen, was man ihm sagt - Praemissen also pruefen.** Er hat den
+  Merge freigegeben, weil ihm gesagt wurde, `main` sei leer und der Merge folglich
+  konfliktfrei. Das war falsch (Fallstrick h). Als es auffiel, war die richtige Reaktion,
+  den Merge zu stoppen, den Fehler zu benennen und ihn neu entscheiden zu lassen. Genau so
+  weitermachen: **eine Freigabe gilt nur fuer die Lage, die man beschrieben hat.**
 - **Arbeitsweise:** Er erwartet Delegation an Sub-Agents statt Alleingang (steht so in seiner
   globalen `CLAUDE.md`). Substanzielle Ausfuehrung an Agenten, Koordination und Ergebnis-Merge
   selbst.
@@ -198,7 +272,11 @@ Auswaerts ueber Kreisorientierung und liefert zusaetzlich eine deterministische 
 fuer die spaetere Live-Darstellung. Ein adversarialer Review fand einen echten Blocker -
 topfpaar-lokale Forward-Checks liessen die Suche auf dem echten Feld 2025/26 bei 21 Prozent
 der Seeds scheitern - der behoben und anschliessend unabhaengig nachgemessen wurde (440
-Auslosungen ohne Regelverstoss, Determinismus ueber 25 Prozesse byteidentisch). Offen sind
-nur der **Merge** von PR #1 (offen seit 2026-08-28, `MERGEABLE`, ohne Review) und ein Verweis
-auf die Regeldoku im Repo-Root; Letzteres bitte nur mit Freigabe, weil dort parallel der
-SwiftUI-Agent arbeitet.
+Auslosungen ohne Regelverstoss, Determinismus ueber 25 Prozesse byteidentisch).
+
+**Seit dem 2026-09-06 liegt sie ueber PR #1 auf `main`** (`b5e5967`), zusammen mit der
+parallel entstandenen SwiftUI-App. Verbunden sind die beiden aber noch nicht: Die App laeuft
+auf `MockDrawEngine` hinter dem Protokoll `DrawEnginePort`, und die Wurzel-`Package.swift`
+zeigt weiter auf einen 8-Zeilen-Platzhalter unter `Packages/DrawEngine/`. **Der naechste
+Schritt ist der Adapter** (Abschnitt 5a und 7), und er haengt an einer Produktentscheidung,
+die noch offen ist: Der Port erwartet Ablehnungen mit Begruendung, die Engine liefert keine.
